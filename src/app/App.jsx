@@ -237,10 +237,13 @@ function App() {
 						<div className={style["about-info"]}>
 							<h3>Get to know me!</h3>
 							<p>
-								I'm a <span>Frontend Web Developer</span> building the Front-end of Websites and Web Applications that leads to the success of the overall product. Check out some of my work in the <span>Projects</span> section. <br /> <br />
-								I also like sharing content related to the stuff that I have learned over the years in <span>Web Development</span> so it can help other people of the Dev Community. Feel free to Connect or Follow me on my <a href="https://github.com/Abirullah" target="_blank">Github</a> where I post useful content related to Web Development and Programming. <br /> <br />
-								I'm open to <span>Job</span> opportunities where I can contribute, learn and grow. If you have a good opportunity that matches my skills and experience then don't hesitate to <span>contact</span> me.
-							</p>
+    I'm a <span>Junior Full Stack Web Developer</span> passionate about building responsive, user-friendly websites and web applications that contribute to the success of the overall product. Check out some of my work in the <span>Projects</span> section. <br /><br />
+    
+    I enjoy sharing what I learn on my journey in <span>Web Development</span>, hoping it can help others in the Dev Community. Feel free to connect or follow me on <a href="https://github.com/Abirullah" target="_blank">GitHub</a>, where I regularly post content related to development and programming. <br /><br />
+    
+    I'm currently open to <span>job opportunities</span> where I can contribute, grow, and continue learning. If you have a role that matches my skills and passion, don't hesitate to <span>contact</span> me.
+</p>
+
 						</div>
 						<div className={style["my-skill"]}>
 							<h3>My Skills</h3>
