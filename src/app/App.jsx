@@ -369,7 +369,7 @@ function App() {
 					<div className={style["footer-info"]}>
 						<div>
 							<h3>Abirullah</h3>
-							<p>AI'm a Junior Full Stack Web Developer with a passion for building user-friendly,
+							<p>I'm a Junior Full Stack Web Developer with a passion for building user-friendly,
 								responsive websites and web applications. From crafting clean, modern frontends
 								to working on efficient backend functionality, I'm focused on learning, growing,
 								and delivering solutions that make a real impact.</p>
