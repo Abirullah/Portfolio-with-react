@@ -368,6 +368,7 @@ function App() {
 				<div className={style.container}>
 					<div className={style["footer-info"]}>
 						<div>
+							
 							<h3>Abirullah</h3>
 							<p>I'm a Junior Full Stack Web Developer with a passion for building user-friendly,
 								responsive websites and web applications. From crafting clean, modern frontends
