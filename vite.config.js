@@ -4,7 +4,7 @@ import svgr from '@svgr/rollup';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: '/Portfolio-with-react-main/',
+  base: '/Portfolio-with-react/',
   plugins: [react(), svgr()],
   server: {
     port: 3000,
