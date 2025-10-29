@@ -850,6 +850,9 @@
     width: 60%;
     font-size: 15px;
 }
+.social {
+    width: 200px;
+}
 
 .social>h3 {
     margin: 0;
@@ -858,6 +861,7 @@
     letter-spacing: 1px;
     font-size: 20px;
     margin-bottom: 20px;
+    margin-top: 40px;
 }
 
 .social>div {
