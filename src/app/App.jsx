@@ -1,23 +1,33 @@
-import React, { useState, useRef, useEffect } from 'react';
-import AOS from 'aos';
-import 'aos/dist/aos.css';
-
-
-
+import { useState, useEffect } from "react";
+import AOS from "aos";
+import "aos/dist/aos.css";
+import { useForm, ValidationError } from "@formspree/react";
 
 // import components
-import DownloadButton from '../common/components/DownloadButton/DownloadButton';
-import IconButton from '../common/components/IconButton/IconButton';
-import InputField from '../common/components/InputField/InputField';
-import TextAreaField from '../common/components/TextAreaField/TextAreaField';
-import SubmitButton from '../common/components/SubmitButton/SubmitButton';
-import Loader from '../common/components/Loader/Loader';
-import cv from '../assets/files/MyResume2025.pdf';
+import DownloadButton from "../common/components/DownloadButton/DownloadButton";
+import IconButton from "../common/components/IconButton/IconButton";
+import InputField from "../common/components/InputField/InputField";
+import TextAreaField from "../common/components/TextAreaField/TextAreaField";
+import SubmitButton from "../common/components/SubmitButton/SubmitButton";
+import Loader from "../common/components/Loader/Loader";
+import cv from "../assets/files/MyResume2025.pdf";
+import FormOpenButton from "../common/components/SubmitButton/FormOpenButton";
 
 // import icons
 import { FaReact } from "react-icons/fa";
-import { AiFillGithub, AiFillLinkedin, AiFillHtml5, AiOutlineEye } from "react-icons/ai";
-import { BiLogoGmail, BiLogoCss3, BiLogoJavascript, BiLogoBootstrap, BiLogoTailwindCss } from "react-icons/bi";
+import {
+  AiFillGithub,
+  AiFillLinkedin,
+  AiFillHtml5,
+  AiOutlineEye,
+} from "react-icons/ai";
+import {
+  BiLogoGmail,
+  BiLogoCss3,
+  BiLogoJavascript,
+  BiLogoBootstrap,
+  BiLogoTailwindCss,
+} from "react-icons/bi";
 import { BsFacebook, BsGit, BsPuzzle } from "react-icons/bs";
 import { TbBrandCpp } from "react-icons/tb";
 import { FaMobileAlt } from "react-icons/fa";
@@ -26,13 +36,13 @@ import { SiTypescript, SiReactquery } from "react-icons/si";
 import { SiExpress } from "react-icons/si";
 
 //import images
-import Todo from '../assets/images/Todolist.jpeg';
-import GlobalShare from '../assets/images/GlobalShare.png';
-import Wather from '../assets/images/watherapp.jpeg';
+import Todo from "../assets/images/Todolist.jpeg";
+import GlobalShare from "../assets/images/GlobalShare.png";
+import Wather from "../assets/images/watherapp.jpeg";
 
 // import style
-import style from './App.module.css';
-import clsx from 'clsx';
+import style from "./App.module.css";
+import clsx from "clsx";
 
 const skills = [
   {
@@ -81,45 +91,45 @@ const skills = [
     name: "Bootstrip",
     icon: <BiLogoBootstrap size="25px" color="white" />,
     animinate: "zoom-in",
-	cssName: "redux",
+    cssName: "redux",
   },
   {
     name: "TailwindCss",
     icon: <BiLogoTailwindCss size="25px" color="white" />,
     animinate: "zoom-in",
-	cssName: "recoil",
+    cssName: "recoil",
   },
   {
     name: "React Query",
     icon: <SiReactquery size="25px" color="white" />,
     animinate: "zoom-in-left",
-	cssName: "react-query",
+    cssName: "react-query",
   },
 
   {
     name: "Responsive Design",
     icon: <FaMobileAlt size="25px" color="white" />,
     animinate: "zoom-in-left",
-	cssName: "responsive",
+    cssName: "responsive",
   },
   {
     name: "Git",
     icon: <BsGit size="25px" color="white" />,
     animinate: "zoom-in-down",
-	cssName: "git",
+    cssName: "git",
   },
 
   {
     name: "C++",
     icon: <TbBrandCpp size="25px" color="white" />,
     animinate: "zoom-in",
-	cssName: "cpp",
+    cssName: "cpp",
   },
   {
     name: "Problem Solving",
     icon: <BsPuzzle size="25px" color="white" />,
     animinate: "zoom-in-right",
-	cssName: "problem-solving",
+    cssName: "problem-solving",
   },
 ];
 
@@ -162,44 +172,22 @@ const projects = [
   },
 ];
 
-
-
-
 function App() {
-	const form = useRef();
+  const [state, handleSubmit] = useForm("xnjnznvd");
+  const [menu, setMenu] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [ContactForm, setContactForm] = useState(false);
 
-	const [menu, setMenu] = useState(false);
-	const [loading, setLoading] = useState(false);
-
-
-	useEffect(() => {
+  useEffect(() => {
     AOS.init({
-      duration: 2000, 
-      offset: 100, 
-      easing: "ease-in-out", 
+      duration: 2000,
+      offset: 100,
+      easing: "ease-in-out",
       once: false,
     });
   }, []);
 
-	const sendEmail = (e) => {
-		e.preventDefault();
-		setLoading(true);
-
-		
-
-		setTimeout(function () {
-			emailjs.sendForm('service_gjbmeus', 'template_qk6p0pa', form.current, 'HDMwz57k3xrihLg4J')
-				.then((result) => {
-					e.target.name.value = '';
-					e.target.email.value = '';
-					e.target.message.value = '';
-				});
-			setLoading(false);
-		}, 2000);
-
-	};
-
-	return (
+  return (
     <div className={style.app}>
       {/* Navbar */}
       <div className={style.nav} data-aos="flip-up">
@@ -372,11 +360,10 @@ function App() {
       {/* Projects */}
       <div id="Projects" className={style.projects}>
         <div className={style.container}>
-					<h2 className={style.title}
-						data-aos="zoom-in-down"
-					>Projects</h2>
-					<p
-						data-aos="zoom-in-up">
+          <h2 className={style.title} data-aos="zoom-in-down">
+            Projects
+          </h2>
+          <p data-aos="zoom-in-up">
             Here you will find some of the personal and clients projects that I
             created with each project containing its own case study
           </p>
@@ -385,26 +372,22 @@ function App() {
               return (
                 <div key={`project${index}`} className={style.project}>
                   <div className={style["project-image"]}>
-						  <img src={project.image} alt="Project Image"
-							  data-aos={`${project.imgAniminate}`}
-						  />
+                    <img
+                      src={project.image}
+                      alt="Project Image"
+                      data-aos={`${project.imgAniminate}`}
+                    />
                   </div>
-					  <div className={style["project-info"]}>
-						  <h3
-							  data-aos={`${project.nameAnimate}`}
-						  >
-							  {project.name}
-						  </h3>
-						  <p
-							  data-aos={`${project.descriptionAnimate}`}
-						  >
-							  {project.description}
-						  </p>
-						  <div className={style["project-buttons"]}
-							  data-aos={`${project.buttonAniminate}`}
-						  >
-							  <IconButton
-								  
+                  <div className={style["project-info"]}>
+                    <h3 data-aos={`${project.nameAnimate}`}>{project.name}</h3>
+                    <p data-aos={`${project.descriptionAnimate}`}>
+                      {project.description}
+                    </p>
+                    <div
+                      className={style["project-buttons"]}
+                      data-aos={`${project.buttonAniminate}`}
+                    >
+                      <IconButton
                         width="170px"
                         height="50px"
                         backgroundColor="var(--primary-main)"
@@ -434,76 +417,136 @@ function App() {
       </div>
 
       {/* Contact */}
-      <div id="Contact" className={style.contact}>
-        <div className={style.container}>
-					<h2 className={style.title}
-						data-aos="zoom-in-down"
-					>Contact</h2>
-					<p
-						data-aos="zoom-in-up"
-					>
-            Feel free to Contact me by submitting the form below and I will get
-            back to you as soon as possible
-          </p>
-					<form
-						
-            ref={form}
-            onSubmit={sendEmail}
-            className={clsx({ [style["inactive-form"]]: loading })}
-          >
-            <InputField
-              width="700px"
-              height="40px"
-              name="name"
-              placeholder="Enter Your Name"
-              label="Name"
-              type="text"
-            />
-            <InputField
-              width="700px"
-              height="40px"
-              name="email"
-              placeholder="Enter Your Email"
-              label="Email"
-              type="email"
-            />
-            <TextAreaField
-              width="700px"
-              height="250px"
-              name="message"
-              placeholder="Enter Your Message"
-              label="Message"
-              type="text"
-            />
-            <SubmitButton
-              icon={<RiSendPlaneFill size="20px" color="white" />}
-              width="200px"
-              height="60px"
-              color="white"
-              backgroundColor="var(--primary-main)"
-            >
-              Submit
-            </SubmitButton>
-            {loading && (
-              <div className={style.loader}>
-                <Loader />
-              </div>
+      {ContactForm ? (
+        <div id="Contact" className={style.contact}>
+          <div className={style.container}>
+            <h2 className={style.title} data-aos="zoom-in-down">
+              Contact
+            </h2>
+
+            <p data-aos="zoom-in-up">
+              Feel free to Contact me by submitting the form below and I will
+              get back to you as soon as possible
+            </p>
+
+            {state.succeeded ? (
+              <p className={style.success}>
+                ✅ Thank you! Your message has been sent successfully.
+              </p>
+            ) : (
+              <>
+                <form
+                    onSubmit={handleSubmit}
+                  data-aos="zoom-in-up"
+                  className={clsx({
+                    [style["inactive-form"]]: state.submitting,
+                  })}
+                >
+                  <InputField
+                    width="700px"
+                    height="40px"
+                    name="name"
+                    placeholder="Enter Your Name"
+                    label="Name"
+                    type="text"
+                    required
+                  />
+
+                  <InputField
+                    width="700px"
+                    height="40px"
+                    name="email"
+                    placeholder="Enter Your Email"
+                    label="Email"
+                    type="email"
+                    required
+                  />
+
+                  <ValidationError
+                    prefix="Email"
+                    field="email"
+                    errors={state.errors}
+                  />
+
+                  <TextAreaField
+                    width="700px"
+                    height="250px"
+                    name="message"
+                    placeholder="Enter Your Message"
+                    label="Message"
+                    required
+                  />
+
+                  <ValidationError
+                    prefix="Message"
+                    field="message"
+                    errors={state.errors}
+                  />
+
+                  <SubmitButton
+                    icon={<RiSendPlaneFill size="20px" color="white" />}
+                    width="200px"
+                    height="60px"
+                    color="white"
+                    backgroundColor="var(--primary-main)"
+                    disabled={state.submitting}
+                  >
+                    {state.submitting ? "Sending..." : "Submit"}
+                  </SubmitButton>
+
+                  {state.submitting && (
+                    <div className={style.loader}>
+                      <Loader />
+                    </div>
+                  )}
+                </form>
+                
+                <p
+                  data-aos="zoom-in-up"
+                  className="flex justify-center items-center mt-15"
+                  onClick={() => setContactForm(false)}
+                >
+                  <FormOpenButton
+                      Text="close Contact Form"
+                      rotation="0deg"
+                      
+                  />
+                </p>
+              </>
             )}
-          </form>
+          </div>
         </div>
-      </div>
+      ) : (
+        <div id="Contact" className={style.contact}>
+          <div className={`${style.container} text-center`}>
+            <h2 className={style.title} data-aos="zoom-in-down">
+              Contact
+            </h2>
+
+            <p data-aos="zoom-in-up">
+              Feel free to Contact me by submitting the form below and I will
+              get back to you as soon as possible
+            </p>
+            <p
+              data-aos="zoom-in-up"
+              className="flex justify-center items-center mt-4"
+              onClick={() => setContactForm(true)}
+            >
+              <FormOpenButton
+                Text="Open Contact Form"
+              />
+            </p>
+          </div>
+        </div>
+      )}
 
       {/* footer */}
       <div className={style.footer}>
         <div className={style.container}>
           <div className={style["footer-info"]}>
             <div>
-							<h3
-								data-aos="zoom-in-left"
-							>Abirullah</h3>
-							<p
-								data-aos="zoom-in-right"
-							>
+              <h3 data-aos="zoom-in-left">Abirullah</h3>
+              <p data-aos="zoom-in-right">
                 I'm a Junior Full Stack Web Developer with a passion for
                 building user-friendly, responsive websites and web
                 applications. From crafting clean, modern frontends to working
@@ -512,36 +555,34 @@ function App() {
               </p>
             </div>
             <div className={style.social}>
-							<h3
-								data-aos="zoom-in-up"
-			  >Social</h3>
+              <h3 data-aos="zoom-in-up">Social</h3>
               <div className={style["social-icons"]}>
-								<a
-									data-aos="zoom-in-left"
+                <a
+                  data-aos="zoom-in-left"
                   className={style.git}
                   target="_blank"
                   href="https://github.com/Abirullah"
                 >
                   <AiFillGithub size="30px" color="white" />
                 </a>
-								<a
-									data-aos="zoom-in-up"
+                <a
+                  data-aos="zoom-in-up"
                   className={style.linkedin}
                   target="_blank"
                   href="https://pk.linkedin.com/in/abir-afridi-2856a02b0"
                 >
                   <AiFillLinkedin size="30px" color="white" />
                 </a>
-								<a
-									data-aos="zoom-in-right"
+                <a
+                  data-aos="zoom-in-right"
                   className={style.gmail}
                   target="_blank"
                   href="mailto:abirafridi87@gmail.com?subject=SendMail&body=Description"
                 >
                   <BiLogoGmail size="30px" color="white" />
                 </a>
-								<a
-									data-aos="zoom-in-down"
+                <a
+                  data-aos="zoom-in-down"
                   className={style.facebook}
                   target="_blank"
                   href="https://www.facebook.com/share/iPpuE83eD6ymf6PE/?mibextid=qi2Omg"
