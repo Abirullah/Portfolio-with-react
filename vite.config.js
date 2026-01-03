@@ -6,6 +6,7 @@ import svgr from '@svgr/rollup';
 export default defineConfig({
   base: '/Portfolio-with-react/',
   plugins: [react(), svgr()],
+  base: '/Portfolio-with-react/',
   server: {
     port: 3000,
   }
