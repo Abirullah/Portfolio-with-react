@@ -3,7 +3,6 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "homepage": "https://abirullah.github.io/Portfolio-For-Me/",
   "scripts": {
     "predeploy": "npm run build",
     "vite": "vite",
