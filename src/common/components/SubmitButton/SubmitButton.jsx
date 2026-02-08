@@ -1,5 +1,3 @@
-import React from 'react'
-
 import style from './SubmitButton.module.css';
 
 function SubmitButton({ width , height , icon , children , color , backgroundColor }) {

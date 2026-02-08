@@ -1,5 +1,3 @@
-import React from 'react'
-
 import style from './TextAreaField.module.css'
 
 function TextAreaField({ width , height , type , value , name , placeholder , label }) {

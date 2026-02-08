@@ -1,5 +1,3 @@
-import React from 'react'
-
 import style from './InputField.module.css';
 
 function InputField({ width , height , type , value , name , placeholder , label }) {

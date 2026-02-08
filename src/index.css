@@ -38,8 +38,10 @@ html {
 }
 
 body {
+  margin: 0;
   font-family: 'DM Sans', sans-serif;
-  scrollbar-width: 10px;
+  background: #00060d;
+  scrollbar-width: thin;
 }
 
 a {
