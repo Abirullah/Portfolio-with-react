@@ -1,64 +1,69 @@
 .submit-button{
     position: relative;
-    cursor: pointer;
     overflow: hidden;
-    border-radius: 5px;
+    border-radius: 8px;
+}
+
+.button{
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: uppercase;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform .28s ease, box-shadow .28s ease, filter .28s ease;
+}
+
+.button:disabled{
+    cursor: not-allowed;
+    opacity: .88;
+}
+
+.label{
+    transition: opacity .22s ease, transform .3s ease;
+    transform: translateY(0);
+    white-space: nowrap;
 }
 
 .icon{
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%,-50%);
-    margin-left: -35px;
-    margin-top: 2px;
-    transition: 1s;
-}
-
-.submit-button > input{
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    padding: 10px;
-    font-size: 14px;
-    font-weight: 600;
-    text-transform: uppercase;
-    padding-left: 20px;
-    transition: 1s;
-    overflow: hidden;
-}
-
-.submit-button:hover > input{   
-    padding-left: 250px;
+    transform: translate(-50%, 12px) scale(.82);
+    opacity: 0;
+    display: inline-flex;
+    transition: opacity .24s ease, transform .3s ease;
 }
 
 .icon > svg{
-    transition: 1s;
+    transition: transform .3s ease;
 }
 
-.submit-button:hover > .icon > svg{   
-    transform: rotate(45deg);
+.button:hover:not(:disabled),
+.button:focus-visible:not(:disabled){
+    transform: translateY(-2px);
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.25);
 }
 
-.submit-button:hover > .icon{
-    margin: 0;
-    animation: icon 1.5s 1s linear infinite forwards;
+.button:hover:not(:disabled) .label,
+.button:focus-visible:not(:disabled) .label{
+    opacity: 0;
+    transform: translateY(-8px);
 }
 
-@keyframes icon{
-    0%{
-        margin: 0;
-    }
-    25%{
-        margin-top: 5px;
-    }
-    50%{
-        margin: 0;
-    }
-    75%{
-        margin-top: -5px;
-    }
-    100%{
-        margin: 0;
-    }
+.button:hover:not(:disabled) .icon,
+.button:focus-visible:not(:disabled) .icon{
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.button:hover:not(:disabled) .icon > svg,
+.button:focus-visible:not(:disabled) .icon > svg{
+    transform: rotate(15deg);
 }

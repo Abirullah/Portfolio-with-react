@@ -120,6 +120,10 @@ function easeInOutCubic(t) {
   return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
 }
 
+function easeInOutQuint(t) {
+  return t < 0.5 ? 16 * t * t * t * t * t : 1 - Math.pow(-2 * t + 2, 5) / 2;
+}
+
 function SeaJourney() {
   const rootRef = useRef(null);
   const progressRef = useRef(0);
@@ -127,6 +131,7 @@ function SeaJourney() {
 
   const [state, handleSubmit] = useForm("xnjnznvd");
   const [currentSection, setCurrentSection] = useState("home");
+  const visibleProjects = useMemo(() => projects.slice(0, 3), []);
 
   const prefersReducedMotion = useMemo(() => {
     if (typeof window === "undefined") return false;
@@ -290,11 +295,12 @@ function SeaJourney() {
       const startY = window.scrollY;
       const delta = desiredY - startY;
       const startT = performance.now();
-      const duration = Math.min(1600, Math.max(900, Math.abs(delta) * 0.65));
+      const distance = Math.abs(delta);
+      const duration = Math.min(2400, Math.max(1100, Math.pow(distance, 0.84) * 5.6));
 
       function step(now) {
         const t = clamp01((now - startT) / duration);
-        const eased = easeInOutCubic(t);
+        const eased = easeInOutCubic(t) * 0.6 + easeInOutQuint(t) * 0.4;
         window.scrollTo(0, startY + delta * eased);
         if (t < 1) scrollRaf = window.requestAnimationFrame(step);
         else scrollRaf = 0;
@@ -508,13 +514,13 @@ function SeaJourney() {
                 <h2>Projects</h2>
                 <p>All projects in one section with richer 3D-inspired cards.</p>
                 <div className={styles.projectHeadingMeta}>
-                  <span className={styles.projectCounter}>Showing all {projects.length} projects</span>
+                  <span className={styles.projectCounter}>Showing {visibleProjects.length} projects</span>
                   <span className={styles.projectHint}>Priority projects are highlighted</span>
                 </div>
               </div>
 
               <div className={styles.projectGrid}>
-                {projects.map((project, index) => (
+                {visibleProjects.map((project, index) => (
                   <article
                     key={`project${index}`}
                     className={clsx(styles.projectCard, {

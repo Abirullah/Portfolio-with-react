@@ -1,21 +1,22 @@
 import style from './SubmitButton.module.css';
 
-function SubmitButton({ width , height , icon , children , color , backgroundColor }) {
+function SubmitButton({ width , height , icon , children , color , backgroundColor, disabled }) {
     return (
         <div className={style["submit-button"]} style={{width: width , height: height}}>
-            <div className={style.icon}>
-                {icon}
-            </div>
-            <input 
+            <button
+                type="submit"
+                className={style.button}
                 style={{
                     width: width,
                     height: height,
                     backgroundColor: backgroundColor,
                     color: color
                 }}
-                type="submit" 
-                value={children}
-            />
+                disabled={disabled}
+            >
+                <span className={style.label}>{children}</span>
+                <span className={style.icon} aria-hidden="true">{icon}</span>
+            </button>
         </div>
     );
 }
