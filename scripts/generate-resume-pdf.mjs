@@ -330,7 +330,7 @@ function buildQrMatrixV3L({ text, ecLevel = "L", mask = 0 }) {
 }
 
 function drawQrCode(commands, { x, y, size, text }) {
-  const matrix = buildQrMatrixV3L({ text, ecLevel: "L", mask: 0 });
+  const matrix = buildQrMatrixV3L({ text, ecLevel: "M", mask: 0 });
   const quiet = 4;
   const count = matrix.length;
   const total = count + quiet * 2;

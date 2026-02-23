@@ -16,6 +16,8 @@
     "@emailjs/browser": "^3.11.0",
     "@emotion/react": "^11.14.0",
     "@formspree/react": "^3.0.0",
+    "@react-three/drei": "^10.7.7",
+    "@react-three/fiber": "^9.5.0",
     "aos": "^2.3.4",
     "clsx": "^2.0.0",
     "gsap": "^3.13.0",
@@ -23,7 +25,8 @@
     "react-awesome-reveal": "^4.3.1",
     "react-dom": "^18.2.0",
     "react-icons": "^4.12.0",
-    "styled-components": "^6.1.19"
+    "styled-components": "^6.1.19",
+    "three": "^0.183.1"
   },
   "devDependencies": {
     "@svgr/rollup": "^8.1.0",

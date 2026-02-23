@@ -8,7 +8,6 @@ import InputField from "../../common/components/InputField/InputField";
 import TextAreaField from "../../common/components/TextAreaField/TextAreaField";
 import SubmitButton from "../../common/components/SubmitButton/SubmitButton";
 import Loader from "../../common/components/Loader/Loader";
-import FormOpenButton from "../../common/components/SubmitButton/FormOpenButton";
 
 import { AiFillGithub, AiFillLinkedin, AiFillHtml5, AiOutlineEye } from "react-icons/ai";
 import { BiLogoGmail, BiLogoCss3, BiLogoJavascript, BiLogoBootstrap, BiLogoTailwindCss } from "react-icons/bi";
@@ -28,6 +27,7 @@ import OceanCanvas from "./OceanCanvas";
 import FishSprite from "./FishSprite";
 import Titanic from "./Titanic";
 import DeepNav from "./DeepNav";
+import Globe3D from "./Globe3D";
 import styles from "./SeaJourney.module.css";
 
 const skills = [
@@ -48,29 +48,63 @@ const skills = [
 
 const projects = [
   {
+    name: "TaskMaster - Task Management App",
+    link: "https://abirafriditaskmaster.vercel.app/",
+    github: "https://github.com/Abirullah/To-dose-app",
+    description:
+      "A comprehensive task management dashboard with private tasks, AI chat, teams, and submissions. Built with React, featuring a clean, sexy dashboard that looks premium and feels fast.",
+    image: Todo,
+    priority: true,
+    featured: true,
+  },
+  {
+    name: "EchoTune - Music Streaming Platform",
+    link: "https://echotuneapp.vercel.app/",
+    github: "https://github.com/Abirullah/Music-Wed-FrontEnd",
+    description:
+      "A modern music streaming web app with vibrant UI, content creator/user roles, and seamless music discovery. Built for music lovers who want a premium listening experience.",
+    image: GlobalShare,
+    priority: true,
+    featured: true,
+  },
+  {
     name: "Country Information Explorer",
     link: "https://abirullah.github.io/Countery-app-for-infromation/",
     github: "https://github.com/Abirullah/Countery-app-for-infromation",
     description:
       "Powered by a reliable API, Country Information Explorer delivers trustworthy data with a clean, fast UI for discovery and learning.",
     image: GlobalShare,
+    priority: false,
   },
   {
-    name: "Todo List",
-    link: "https://Abirullah.github.io/react-todo-app",
-    github: "https://github.com/Abirullah/react-todo-app",
-    description:
-      "A simple, effective todo app focused on productivity: add tasks, stay organized, and keep momentum.",
-    image: Todo,
-  },
-  {
-    name: "Wather App",
+    name: "Weather App",
     link: "https://Abirullah.github.io/React-wather-app",
     github: "https://github.com/Abirullah/React-wather-app",
     description:
       "A weather app with live API data, search by city, and friendly, readable forecasts built for daily use.",
     image: Wather,
+    priority: false,
   },
+];
+
+const overlayFish = [
+  { id: "fxFish1", variant: "cyan", dir: "l2r", y: "16vh", scale: 0.85, opacity: 0.26, dur: "22s", delay: "-6s", z: 2 },
+  { id: "fxFish2", variant: "gold", dir: "r2l", y: "26vh", scale: 0.7, opacity: 0.22, dur: "28s", delay: "-18s", z: 1 },
+  { id: "fxFish3", variant: "blue", dir: "l2r", y: "42vh", scale: 0.62, opacity: 0.18, dur: "34s", delay: "-22s", z: 1 },
+  { id: "fxFish4", variant: "pink", dir: "r2l", y: "64vh", scale: 0.8, opacity: 0.2, dur: "24s", delay: "-12s", z: 2 },
+  { id: "fxFish5", variant: "cyan", dir: "l2r", y: "78vh", scale: 0.72, opacity: 0.16, dur: "30s", delay: "-26s", z: 1 },
+  { id: "fxFish6", variant: "gold", dir: "r2l", y: "84vh", scale: 0.58, opacity: 0.14, dur: "36s", delay: "-10s", z: 0 },
+];
+
+const overlayBubbles = [
+  { id: "fxB1", x: "14vw", size: "10px", drift: "-18px", opacity: 0.22, dur: "12s", delay: "-4s" },
+  { id: "fxB2", x: "24vw", size: "7px", drift: "12px", opacity: 0.18, dur: "10s", delay: "-8s" },
+  { id: "fxB3", x: "36vw", size: "12px", drift: "-10px", opacity: 0.2, dur: "14s", delay: "-2s" },
+  { id: "fxB4", x: "52vw", size: "8px", drift: "20px", opacity: 0.16, dur: "11s", delay: "-6s" },
+  { id: "fxB5", x: "66vw", size: "14px", drift: "-22px", opacity: 0.2, dur: "16s", delay: "-10s" },
+  { id: "fxB6", x: "78vw", size: "9px", drift: "14px", opacity: 0.18, dur: "13s", delay: "-12s" },
+  { id: "fxB7", x: "88vw", size: "7px", drift: "-16px", opacity: 0.14, dur: "10s", delay: "-14s" },
+  { id: "fxB8", x: "8vw", size: "6px", drift: "10px", opacity: 0.12, dur: "9s", delay: "-16s" },
 ];
 
 function clamp01(value) {
@@ -91,8 +125,8 @@ function SeaJourney() {
   const progressRef = useRef(0);
   const mouseRef = useRef({ x: window.innerWidth * 0.5, y: window.innerHeight * 0.35 });
 
-  const [contactForm, setContactForm] = useState(false);
   const [state, handleSubmit] = useForm("xnjnznvd");
+  const [currentSection, setCurrentSection] = useState("home");
 
   const prefersReducedMotion = useMemo(() => {
     if (typeof window === "undefined") return false;
@@ -126,6 +160,17 @@ function SeaJourney() {
       raf = 0;
       const p = maxScroll > 0 ? clamp01(latestScrollY / maxScroll) : 0;
       progressRef.current = p;
+
+      // Determine current section based on scroll progress
+      if (p < 0.25) {
+        setCurrentSection("home");
+      } else if (p < 0.5) {
+        setCurrentSection("about");
+      } else if (p < 0.75) {
+        setCurrentSection("projects");
+      } else {
+        setCurrentSection("contact");
+      }
 
       // Background layer mixes
       const surface = 1 - smoothstep(0.02, 0.24, p);
@@ -265,10 +310,6 @@ function SeaJourney() {
     };
   }, [prefersReducedMotion]);
 
-  function onToggleKeyDown(e, action) {
-    if (e.key === "Enter" || e.key === " ") action();
-  }
-
   return (
     <div ref={rootRef} className={styles.stage}>
       <div className={styles.oceanBg} aria-hidden="true">
@@ -283,7 +324,44 @@ function SeaJourney() {
 
       <OceanCanvas progressRef={progressRef} mouseRef={mouseRef} reducedMotion={prefersReducedMotion} />
 
+      <Globe3D progressRef={progressRef} currentSection={currentSection} className={styles.globe3D} />
+
       <main className={styles.content}>
+        <div className={styles.foregroundFx} aria-hidden="true">
+          {overlayBubbles.map((b) => (
+            <span
+              key={b.id}
+              className={styles.fxBubble}
+              style={{
+                "--x": b.x,
+                "--s": b.size,
+                "--drift": b.drift,
+                "--o": b.opacity,
+                "--dur": b.dur,
+                "--delay": b.delay,
+              }}
+            />
+          ))}
+
+          {overlayFish.map((fish) => (
+            <div
+              key={fish.id}
+              className={styles.fxFish}
+              data-dir={fish.dir}
+              style={{
+                "--y": fish.y,
+                "--scale": fish.scale,
+                "--o": fish.opacity,
+                "--dur": fish.dur,
+                "--delay": fish.delay,
+                "--z": fish.z,
+              }}
+            >
+              <FishSprite className={styles.fxFishSvg} variant={fish.variant} flipped={fish.dir === "r2l"} />
+            </div>
+          ))}
+        </div>
+
         {/* Surface / Hero */}
         <section id="Home" className={clsx(styles.section, styles.surface)}>
           <div className={styles.sectionInner}>
@@ -425,19 +503,43 @@ function SeaJourney() {
               </div>
             </div>
 
-            <div className={styles.card}>
+            <div className={clsx(styles.card, styles.projectsCard)}>
               <div className={styles.cardHeader}>
                 <h2>Projects</h2>
-                <p>Some work I’ve built — live demos and GitHub links.</p>
+                <p>All projects in one section with richer 3D-inspired cards.</p>
+                <div className={styles.projectHeadingMeta}>
+                  <span className={styles.projectCounter}>Showing all {projects.length} projects</span>
+                  <span className={styles.projectHint}>Priority projects are highlighted</span>
+                </div>
               </div>
 
               <div className={styles.projectGrid}>
                 {projects.map((project, index) => (
-                  <article key={`project${index}`} className={styles.projectCard}>
+                  <article
+                    key={`project${index}`}
+                    className={clsx(styles.projectCard, {
+                      [styles.featuredProject]: project.featured,
+                    })}
+                  >
                     <div className={styles.projectMedia}>
                       <img src={project.image} alt={`${project.name} preview`} loading="lazy" />
+                      {project.featured && (
+                        <div className={styles.featuredBadge}>
+                          <span>⭐ Featured</span>
+                        </div>
+                      )}
                     </div>
                     <div className={styles.projectBody}>
+                      <div className={styles.projectMetaRow}>
+                        <span
+                          className={clsx(styles.priorityTag, {
+                            [styles.priorityTagHot]: project.priority,
+                            [styles.priorityTagMuted]: !project.priority,
+                          })}
+                        >
+                          {project.priority ? "Priority Project" : "More Project"}
+                        </span>
+                      </div>
                       <h3>{project.name}</h3>
                       <p>{project.description}</p>
                       <div className={styles.projectActions}>
@@ -492,92 +594,66 @@ function SeaJourney() {
                 <p>Submit the form and I’ll get back to you as soon as possible.</p>
               </div>
 
-              {contactForm ? (
-                <>
-                  {state.succeeded ? (
-                    <p className={styles.success}>✅ Thank you! Your message has been sent successfully.</p>
-                  ) : (
-                    <form
-                      onSubmit={handleSubmit}
-                      className={clsx(styles.form, {
-                        [styles.inactiveForm]: state.submitting,
-                      })}
-                    >
-                      <InputField
-                        width="900px"
-                        height="44px"
-                        name="name"
-                        placeholder="Enter your name"
-                        label="Name"
-                        type="text"
-                        required
-                      />
+              {state.succeeded && <p className={styles.success}>✅ Thank you! Your message has been sent successfully.</p>}
 
-                      <InputField
-                        width="900px"
-                        height="44px"
-                        name="email"
-                        placeholder="Enter your email"
-                        label="Email"
-                        type="email"
-                        required
-                      />
+              <form
+                onSubmit={handleSubmit}
+                className={clsx(styles.form, {
+                  [styles.inactiveForm]: state.submitting,
+                })}
+              >
+                <InputField
+                  width="900px"
+                  height="44px"
+                  name="name"
+                  placeholder="Enter your name"
+                  label="Name"
+                  type="text"
+                  required
+                />
 
-                      <ValidationError prefix="Email" field="email" errors={state.errors} />
+                <InputField
+                  width="900px"
+                  height="44px"
+                  name="email"
+                  placeholder="Enter your email"
+                  label="Email"
+                  type="email"
+                  required
+                />
 
-                      <TextAreaField
-                        width="900px"
-                        height="220px"
-                        name="message"
-                        placeholder="Write your message"
-                        label="Message"
-                        required
-                      />
+                <ValidationError prefix="Email" field="email" errors={state.errors} />
 
-                      <ValidationError prefix="Message" field="message" errors={state.errors} />
+                <TextAreaField
+                  width="900px"
+                  height="220px"
+                  name="message"
+                  placeholder="Write your message"
+                  label="Message"
+                  required
+                />
 
-                      <div className={styles.formActions}>
-                        <SubmitButton
-                          icon={<RiSendPlaneFill size="18px" color="white" />}
-                          width="190px"
-                          height="54px"
-                          color="white"
-                          backgroundColor="rgba(94, 7, 205, 0.95)"
-                          disabled={state.submitting}
-                        >
-                          {state.submitting ? "Sending..." : "Submit"}
-                        </SubmitButton>
-                      </div>
+                <ValidationError prefix="Message" field="message" errors={state.errors} />
 
-                      {state.submitting && (
-                        <div className={styles.loader}>
-                          <Loader />
-                        </div>
-                      )}
-                    </form>
-                  )}
-
-                  <div
-                    className={styles.formToggle}
-                    onClick={() => setContactForm(false)}
-                    onKeyDown={(e) => onToggleKeyDown(e, () => setContactForm(false))}
-                    role="button"
-                    tabIndex={0}
+                <div className={styles.formActions}>
+                  <SubmitButton
+                    icon={<RiSendPlaneFill size="18px" color="white" />}
+                    width="190px"
+                    height="54px"
+                    color="white"
+                    backgroundColor="rgba(94, 7, 205, 0.95)"
+                    disabled={state.submitting}
                   >
-                    <FormOpenButton Text="Close Contact Form" rotation="0deg" />
-                  </div>
-                </>
-              ) : (
-                <div
-                  className={styles.formToggle}
-                  onClick={() => setContactForm(true)}
-                  onKeyDown={(e) => onToggleKeyDown(e, () => setContactForm(true))}
-                  role="button"
-                  tabIndex={0}
-                >
-                  <FormOpenButton Text="Open Contact Form" />
+                    {state.submitting ? "Sending..." : "Submit"}
+                  </SubmitButton>
                 </div>
-              )}
+
+                {state.submitting && (
+                  <div className={styles.loader}>
+                    <Loader />
+                  </div>
+                )}
+              </form>
             </div>
           </div>
         </section>
