@@ -1,0 +1,71 @@
+<svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1e3a8a;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0f172a;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="buildingGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#60a5fa;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#3b82f6;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="400" height="300" fill="url(#bgGrad)"/>
+  
+  <!-- Ground -->
+  <rect y="240" width="400" height="60" fill="#1e3a8a" opacity="0.5"/>
+  
+  <!-- Building Structure (School Building) -->
+  <rect x="80" y="120" width="240" height="120" fill="url(#buildingGrad)" stroke="#1e40af" stroke-width="2"/>
+  
+  <!-- Roof -->
+  <polygon points="80,120 200,60 320,120" fill="#f97316" opacity="0.8"/>
+  
+  <!-- Roof accent -->
+  <polygon points="80,120 200,70 320,120" fill="#ea580c" opacity="0.9" stroke="#dc2626" stroke-width="1"/>
+  
+  <!-- Door -->
+  <rect x="185" y="200" width="30" height="40" fill="#7c3aed" stroke="#6d28d9" stroke-width="1"/>
+  <circle cx="212" cy="220" r="2" fill="#fbbf24"/>
+  
+  <!-- Windows - Left side -->
+  <rect x="100" y="140" width="20" height="20" fill="#93c5fd" stroke="#1e40af" stroke-width="1"/>
+  <rect x="100" y="175" width="20" height="20" fill="#93c5fd" stroke="#1e40af" stroke-width="1"/>
+  
+  <rect x="130" y="140" width="20" height="20" fill="#93c5fd" stroke="#1e40af" stroke-width="1"/>
+  <rect x="130" y="175" width="20" height="20" fill="#93c5fd" stroke="#1e40af" stroke-width="1"/>
+  
+  <!-- Window panes -->
+  <line x1="110" y1="140" x2="110" y2="160" stroke="#0f172a" stroke-width="1"/>
+  <line x1="100" y1="150" x2="120" y2="150" stroke="#0f172a" stroke-width="1"/>
+  
+  <!-- Windows - Right side -->
+  <rect x="250" y="140" width="20" height="20" fill="#93c5fd" stroke="#1e40af" stroke-width="1"/>
+  <rect x="250" y="175" width="20" height="20" fill="#93c5fd" stroke="#1e40af" stroke-width="1"/>
+  
+  <rect x="280" y="140" width="20" height="20" fill="#93c5fd" stroke="#1e40af" stroke-width="1"/>
+  <rect x="280" y="175" width="20" height="20" fill="#93c5fd" stroke="#1e40af" stroke-width="1"/>
+  
+  <!-- Flagpole -->
+  <rect x="197" y="50" width="6" height="15" fill="#8b7355"/>
+  <polygon points="203,52 203,60 215,56" fill="#ef4444"/>
+  
+  <!-- Students/People indicators -->
+  <circle cx="60" cy="220" r="6" fill="#fbbf24" stroke="#dc2626" stroke-width="1"/>
+  <path d="M60 226 L55 235 M60 226 L65 235 M55 230 L65 230" stroke="#1e40af" stroke-width="1.5" fill="none"/>
+  
+  <circle cx="340" cy="220" r="6" fill="#fbbf24" stroke="#dc2626" stroke-width="1"/>
+  <path d="M340 226 L335 235 M340 226 L345 235 M335 230 L345 230" stroke="#1e40af" stroke-width="1.5" fill="none"/>
+  
+  <!-- Database/Server icon (right side) -->
+  <g transform="translate(320, 90)">
+    <rect x="0" y="0" width="40" height="12" fill="#06b6d4" stroke="#0891b2" stroke-width="1" rx="2"/>
+    <rect x="0" y="16" width="40" height="12" fill="#06b6d4" stroke="#0891b2" stroke-width="1" rx="2"/>
+    <rect x="0" y="32" width="40" height="12" fill="#06b6d4" stroke="#0891b2" stroke-width="1" rx="2"/>
+    <line x1="-8" y1="6" x2="48" y2="6" stroke="#0891b2" stroke-width="1" opacity="0.5"/>
+  </g>
+  
+  <!-- Title text overlay -->
+  <text x="200" y="285" font-size="16" font-weight="bold" fill="#60a5fa" text-anchor="middle" font-family="Arial, sans-serif">School Management System</text>
+</svg>

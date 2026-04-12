@@ -13,6 +13,9 @@
   --back-ground-color: #fafafa;
   --paragraph-color: #555;
 
+  /* Theme background */
+  --body-bg: #00060d;
+
   /* icons color */
   --html-color: #e34c26;
   --css-color: #264de4;
@@ -40,7 +43,7 @@ html {
 body {
   margin: 0;
   font-family: 'DM Sans', sans-serif;
-  background: #00060d;
+  background: var(--body-bg);
   scrollbar-width: thin;
 }
 
