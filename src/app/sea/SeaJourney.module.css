@@ -1403,6 +1403,10 @@
     top: calc(50% + 34vh);
     letter-spacing: 0.14em;
   }
+  .hero {
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
 }
 
 /* ========================================

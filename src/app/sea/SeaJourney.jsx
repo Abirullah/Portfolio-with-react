@@ -49,8 +49,6 @@ const skills = [
   { name: "Problem Solving", icon: <BsPuzzle size="22px" color="white" />, cssName: "problem-solving" },
 ];
 
-
-
 const projects = [
   {
     name: "School Management System",
