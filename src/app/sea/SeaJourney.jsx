@@ -22,7 +22,7 @@ import Todo from "../../assets/images/Todolist.jpeg";
 import GlobalShare from "../../assets/images/GlobalShare.png";
 import Wather from "../../assets/images/watherapp.jpeg";
 import SchoolMgmt from "../../assets/images/SchoolMgmt.svg";
-import cv from "../../assets/files/MyResume2025.pdf";
+import cv from "../../assets/files/MyResume2026.pdf";
 
 import OceanCanvas from "./OceanCanvas";
 import FishSprite from "./FishSprite";
