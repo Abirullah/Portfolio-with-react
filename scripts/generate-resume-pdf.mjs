@@ -5,7 +5,11 @@ import { fileURLToPath } from "node:url";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const OUT_PATH = path.resolve(__dirname, "../src/assets/files/MyResume2025.pdf");
+const OUT_PATHS = [
+  path.resolve(__dirname, "../src/assets/files/MyResume2026.pdf"),
+  path.resolve(__dirname, "../public/MyResume2026.pdf"),
+  path.resolve(__dirname, "../src/assets/files/MyResume2025.pdf"),
+];
 
 function pad10(value) {
   return String(value).padStart(10, "0");
@@ -218,7 +222,7 @@ function buildQrMatrixV3L({ text, ecLevel = "L", mask = 0 }) {
     set(6, i, bit);
   }
 
-  // alignment patterns (version 3 -> centers at 6 and 22, only (22,22) doesn't overlap finders)
+  // alignment patterns
   drawAlignment(22, 22);
 
   // dark module
@@ -226,38 +230,12 @@ function buildQrMatrixV3L({ text, ecLevel = "L", mask = 0 }) {
 
   // reserve format info
   const formatCoords1 = [
-    [8, 0],
-    [8, 1],
-    [8, 2],
-    [8, 3],
-    [8, 4],
-    [8, 5],
-    [8, 7],
-    [8, 8],
-    [7, 8],
-    [5, 8],
-    [4, 8],
-    [3, 8],
-    [2, 8],
-    [1, 8],
-    [0, 8],
+    [8, 0], [8, 1], [8, 2], [8, 3], [8, 4], [8, 5], [8, 7], [8, 8],
+    [7, 8], [5, 8], [4, 8], [3, 8], [2, 8], [1, 8], [0, 8],
   ];
   const formatCoords2 = [
-    [size - 1, 8],
-    [size - 2, 8],
-    [size - 3, 8],
-    [size - 4, 8],
-    [size - 5, 8],
-    [size - 6, 8],
-    [size - 7, 8],
-    [size - 8, 8],
-    [8, size - 7],
-    [8, size - 6],
-    [8, size - 5],
-    [8, size - 4],
-    [8, size - 3],
-    [8, size - 2],
-    [8, size - 1],
+    [size - 1, 8], [size - 2, 8], [size - 3, 8], [size - 4, 8], [size - 5, 8], [size - 6, 8], [size - 7, 8], [size - 8, 8],
+    [8, size - 7], [8, size - 6], [8, size - 5], [8, size - 4], [8, size - 3], [8, size - 2], [8, size - 1],
   ];
   for (const [x1, y1] of formatCoords1) reserved[y1][x1] = true;
   for (const [x2, y2] of formatCoords2) reserved[y2][x2] = true;
@@ -270,24 +248,15 @@ function buildQrMatrixV3L({ text, ecLevel = "L", mask = 0 }) {
 
   function maskFn(r, c) {
     switch (mask) {
-      case 0:
-        return (r + c) % 2 === 0;
-      case 1:
-        return r % 2 === 0;
-      case 2:
-        return c % 3 === 0;
-      case 3:
-        return (r + c) % 3 === 0;
-      case 4:
-        return ((Math.floor(r / 2) + Math.floor(c / 3)) % 2) === 0;
-      case 5:
-        return ((r * c) % 2 + (r * c) % 3) === 0;
-      case 6:
-        return (((r * c) % 2 + (r * c) % 3) % 2) === 0;
-      case 7:
-        return (((r + c) % 2 + (r * c) % 3) % 2) === 0;
-      default:
-        return false;
+      case 0: return (r + c) % 2 === 0;
+      case 1: return r % 2 === 0;
+      case 2: return c % 3 === 0;
+      case 3: return (r + c) % 3 === 0;
+      case 4: return ((Math.floor(r / 2) + Math.floor(c / 3)) % 2) === 0;
+      case 5: return ((r * c) % 2 + (r * c) % 3) === 0;
+      case 6: return (((r * c) % 2 + (r * c) % 3) % 2) === 0;
+      case 7: return (((r + c) % 2 + (r * c) % 3) % 2) === 0;
+      default: return false;
     }
   }
 
@@ -319,7 +288,6 @@ function buildQrMatrixV3L({ text, ecLevel = "L", mask = 0 }) {
     set(x2, y2, bit, true);
   }
 
-  // Any remaining nulls should be light
   for (let y = 0; y < size; y += 1) {
     for (let x = 0; x < size; x += 1) {
       if (modules[y][x] === null) modules[y][x] = 0;
@@ -336,7 +304,6 @@ function drawQrCode(commands, { x, y, size, text }) {
   const total = count + quiet * 2;
   const moduleSize = size / total;
 
-  // white background (includes quiet zone)
   fillRect(commands, { x, y, w: size, h: size, color: [1, 1, 1] });
 
   for (let r = 0; r < count; r += 1) {
@@ -405,89 +372,95 @@ function buildPdf({ contentStream }) {
 
 function main() {
   const page = { w: 595.28, h: 841.89 };
-  const margin = 48;
-  const colGap = 24;
+  const margin = 42;
+  const colGap = 20;
   const colW = (page.w - margin * 2 - colGap) / 2;
   const rightX = Math.round((margin + colW + colGap) * 100) / 100;
 
   const colors = {
-    header: [0.02, 0.07, 0.12],
+    header: [0.03, 0.10, 0.18],
     white: [1, 1, 1],
-    ink: [0.06, 0.08, 0.10],
-    muted: [0.22, 0.26, 0.30],
-    accent: [0.16, 0.62, 0.86],
-    rule: [0.85, 0.88, 0.90],
+    ink: [0.07, 0.09, 0.12],
+    muted: [0.24, 0.28, 0.32],
+    accent: [0.12, 0.58, 0.84],
+    rule: [0.84, 0.88, 0.92],
   };
 
   const resume = {
     name: "Abirullah",
-    title1: "MEAN Stack Developer",
-    title2: "React • Node/Express • MongoDB",
-    contact: ["Email: abirafridi87@gmail.com", "GitHub: github.com/Abirullah", "LinkedIn: abir-afridi-2856a02b0"],
+    title1: "Software Engineer • Technical Leader • CS Student",
+    title2: "CTO at Abler (abler.dev) • Full Stack Engineer at Code Club",
+    contact: [
+      "Email: abirafridi87@gmail.com • Peshawar, PK",
+      "GitHub: github.com/Abirullah • LinkedIn: abir-afridi-2856a02b0",
+      "Portfolio: abirullah.vercel.app • Company: abler.dev",
+    ],
     portfolioUrl: "https://abirullah.vercel.app/",
     summary: [
-      "Full-stack JavaScript developer focused on clean UI and reliable APIs.",
-      "I build responsive React front-ends and Node/Express back-ends with MongoDB.",
-      "Open to freelance and full-time roles.",
+      "Full-stack software engineer and CS student at IMSciences with nearly 2 years of production experience.",
+      "CTO at Abler (co-founded with 4 brothers) and Full Stack Engineer at Code Club, building scalable web systems.",
+      "Specialized in React, Next.js, TanStack Start, Node.js, REST APIs, PostgreSQL, Drizzle ORM, and MongoDB.",
     ],
     skills: [
-      "JavaScript, TypeScript, React",
-      "Node.js, Express, REST APIs",
-      "MongoDB, CRUD, Auth basics",
-      "Tailwind CSS, Bootstrap, Responsive UI",
-      "Git/GitHub, Deployments",
-      "Performance + UX polish",
-      "React Query, API integration",
-      "Problem solving",
+      "Backend: Node.js, Express.js, REST APIs, Auth",
+      "Frontend: React.js, Next.js, TanStack Start, TS",
+      "Databases: PostgreSQL, Drizzle ORM, MongoDB",
+      "Styling: Tailwind CSS, Responsive UI, Framer Motion",
+      "DevOps: Linux (Ubuntu), Docker, Git, GitHub, Bun",
+      "Auth: JWT, Better Auth, Cloudinary, Stripe, AI APIs",
+      "Architecture: System Design, Scalable Schemas",
     ],
-    experience: {
-      role: "Encova Solutions - MEAN Stack Developer",
-      bullets: [
-        "Build responsive React interfaces for web products",
-        "Create Node/Express APIs and integrate 3rd-party services",
-        "Work with MongoDB models and end-to-end CRUD flows",
-        "Improve performance, accessibility, and UI consistency",
-      ],
-    },
+    experience: [
+      {
+        role: "Abler (abler.dev) - Chief Technology Officer (CTO)",
+        bullets: [
+          "Co-founded with 4 brothers; lead engineering and technical direction",
+          "Architect full-stack web applications and client software solutions",
+          "Set technology stack standards, code reusability, and sprint roadmaps",
+        ],
+      },
+      {
+        role: "Code Club - Full Stack Engineer",
+        bullets: [
+          "Develop responsive web interfaces with React, Next.js & Tailwind CSS",
+          "Engineer scalable Node/Express APIs, auth flows & database models",
+          "Collaborate on agile team sprints, code reviews & release cycles",
+        ],
+      },
+    ],
+    education: [
+      "BS Computer Science (BSCS) - IMSciences, Peshawar",
+      "  In Progress • Algorithms, OS, Linux & Database Systems",
+      "Continuous Merit Scholarship Awardee (Since 8th grade)",
+      "HSC Computer Science - Hadaf Group of Colleges",
+    ],
     projects: [
-      "Country Information Explorer - API-driven UI",
-      "Todo List - simple productivity app",
-      "Weather App - live city forecasts",
+      "TaskMaster (Live) - Task management & team collaboration with AI bot",
+      "EchoTune (Live) - Music streaming & marketplace platform (MERN)",
+      "School ERP - Multi-role education suite (TanStack, PostgreSQL, Drizzle)",
+      "Weather Companion (Live) - Real-time API meteorological forecaster",
     ],
-    services: ["Landing pages + portfolios", "Dashboards + admin panels", "Bug fixes + UI improvements", "API integration"],
-    tools: [
-      "Vite, npm, ESLint",
-      "Git & GitHub",
-      "REST APIs + 3rd-party integrations",
-      "Responsive design",
-      "UI polish + performance",
-      "Reusable components",
-      "Deployment (Vercel / GitHub Pages)",
+    capabilities: [
+      "Full-stack web application architecture & delivery",
+      "Relational & document database data modeling",
+      "Role-Based Access Control (RBAC) & security",
+      "Agile leadership, team collaboration & problem-solving",
     ],
-    highlights: [
-      "Build modern, mobile-first UIs",
-      "Write clean, maintainable code",
-      "Focus on UX + performance",
-      "Ship features end-to-end",
-      "Communicate clearly and work in a team",
-      "Quick learner, consistent delivery",
-    ],
-    workflow: ["Plan → Design → Build", "API integration + CRUD flows", "Review + polish UI", "Deploy + iterate"],
   };
 
   const commands = [];
-  const headerH = 156;
+  const headerH = 148;
   const headerBottom = page.h - headerH;
 
-  // Header block
+  // Header background block
   fillRect(commands, { x: 0, y: headerBottom, w: page.w, h: headerH, color: colors.header });
 
-  const qrBox = 104;
-  const qrPad = 8;
+  const qrBox = 98;
+  const qrPad = 6;
   const qrBoxX = page.w - margin - qrBox;
-  const qrBoxY = headerBottom + 22;
+  const qrBoxY = headerBottom + 26;
 
-  // QR (portfolio)
+  // QR Code
   fillRect(commands, { x: qrBoxX, y: qrBoxY, w: qrBox, h: qrBox, color: colors.white });
   strokeRect(commands, { x: qrBoxX, y: qrBoxY, w: qrBox, h: qrBox, color: [0, 0, 0], width: 1 });
   drawQrCode(commands, {
@@ -498,40 +471,41 @@ function main() {
   });
   addText(commands, {
     font: "F1",
-    size: 9.4,
-    x: qrBoxX,
-    y: headerBottom + 10,
+    size: 8.5,
+    x: qrBoxX + 4,
+    y: headerBottom + 12,
     color: colors.white,
     text: "Scan → abirullah.vercel.app",
   });
 
-  // Left header text
-  addText(commands, { font: "F2", size: 30, x: margin, y: page.h - 58, color: colors.white, text: resume.name });
-  addText(commands, { font: "F2", size: 12.6, x: margin, y: page.h - 90, color: colors.white, text: resume.title1 });
-  addText(commands, { font: "F1", size: 11.2, x: margin, y: page.h - 108, color: colors.white, text: resume.title2 });
+  // Left header texts
+  addText(commands, { font: "F2", size: 26, x: margin, y: page.h - 48, color: colors.white, text: resume.name });
+  addText(commands, { font: "F2", size: 11.5, x: margin, y: page.h - 74, color: [0.45, 0.82, 1], text: resume.title1 });
+  addText(commands, { font: "F1", size: 10.2, x: margin, y: page.h - 90, color: colors.white, text: resume.title2 });
   addTextLines(commands, {
     font: "F1",
-    size: 10.2,
+    size: 9.2,
     x: margin,
-    y: page.h - 128,
-    leading: 14,
-    color: [0.92, 0.96, 1],
+    y: page.h - 110,
+    leading: 13,
+    color: [0.90, 0.95, 1],
     lines: resume.contact,
   });
 
-  // Summary
-  const summaryHeadY = headerBottom - 26;
-  addText(commands, { font: "F2", size: 11, x: margin, y: summaryHeadY, color: colors.accent, text: "SUMMARY" });
+  // Summary section
+  const summaryHeadY = headerBottom - 22;
+  addText(commands, { font: "F2", size: 10.5, x: margin, y: summaryHeadY, color: colors.accent, text: "PROFESSIONAL SUMMARY" });
   addTextLines(commands, {
     font: "F1",
-    size: 10.6,
+    size: 9.8,
     x: margin,
-    y: summaryHeadY - 18,
-    leading: 14.5,
+    y: summaryHeadY - 16,
+    leading: 13.5,
     color: colors.muted,
     lines: resume.summary,
   });
-  const summaryRuleY = summaryHeadY - 18 - resume.summary.length * 14.5 - 10;
+
+  const summaryRuleY = summaryHeadY - 16 - resume.summary.length * 13.5 - 8;
   strokeLine(commands, {
     x1: margin,
     y1: summaryRuleY,
@@ -541,125 +515,101 @@ function main() {
     width: 1,
   });
 
-  // Left column: Skills + Projects
-  const colTop = summaryRuleY - 26;
-  addText(commands, { font: "F2", size: 11, x: margin, y: colTop, color: colors.accent, text: "SKILLS" });
+  // Left column: Skills, Education, Capabilities
+  const colTop = summaryRuleY - 22;
+
+  // SKILLS
+  addText(commands, { font: "F2", size: 10.5, x: margin, y: colTop, color: colors.accent, text: "TECHNICAL SKILLS" });
   addTextLines(commands, {
     font: "F1",
-    size: 10.2,
+    size: 9.4,
     x: margin,
-    y: colTop - 18,
-    leading: 14.2,
+    y: colTop - 16,
+    leading: 13.5,
     color: colors.ink,
-    lines: resume.skills.map((s) => `- ${s}`),
+    lines: resume.skills.map((s) => `• ${s}`),
   });
 
-  const projectsHeadY = colTop - 18 - resume.skills.length * 14.2 - 20;
-  addText(commands, { font: "F2", size: 11, x: margin, y: projectsHeadY, color: colors.accent, text: "PROJECTS" });
+  // EDUCATION & HONORS
+  const eduHeadY = colTop - 16 - resume.skills.length * 13.5 - 18;
+  addText(commands, { font: "F2", size: 10.5, x: margin, y: eduHeadY, color: colors.accent, text: "EDUCATION & SCHOLARSHIPS" });
   addTextLines(commands, {
     font: "F1",
-    size: 10.2,
+    size: 9.4,
     x: margin,
-    y: projectsHeadY - 18,
-    leading: 14.2,
+    y: eduHeadY - 16,
+    leading: 13.5,
     color: colors.ink,
-    lines: resume.projects.map((p) => `- ${p}`),
+    lines: resume.education.map((e) => (e.startsWith(" ") ? e : `• ${e}`)),
   });
 
-  // Right column: Experience + Services
-  addText(commands, { font: "F2", size: 11, x: rightX, y: colTop, color: colors.accent, text: "EXPERIENCE" });
+  // CORE CAPABILITIES
+  const capHeadY = eduHeadY - 16 - resume.education.length * 13.5 - 18;
+  addText(commands, { font: "F2", size: 10.5, x: margin, y: capHeadY, color: colors.accent, text: "CORE CAPABILITIES" });
+  addTextLines(commands, {
+    font: "F1",
+    size: 9.4,
+    x: margin,
+    y: capHeadY - 16,
+    leading: 13.5,
+    color: colors.ink,
+    lines: resume.capabilities.map((c) => `• ${c}`),
+  });
+
+  // Right column: Experience & Major Projects
+  // EXPERIENCE
+  addText(commands, { font: "F2", size: 10.5, x: rightX, y: colTop, color: colors.accent, text: "EXPERIENCE & LEADERSHIP" });
+
+  let expY = colTop - 16;
+  for (const exp of resume.experience) {
+    addText(commands, { font: "F2", size: 9.8, x: rightX, y: expY, color: colors.ink, text: exp.role });
+    expY -= 14;
+    addTextLines(commands, {
+      font: "F1",
+      size: 9.2,
+      x: rightX,
+      y: expY,
+      leading: 13,
+      color: colors.muted,
+      lines: exp.bullets.map((b) => `- ${b}`),
+    });
+    expY -= exp.bullets.length * 13 + 8;
+  }
+
+  // PROJECTS
+  const projHeadY = expY - 8;
+  addText(commands, { font: "F2", size: 10.5, x: rightX, y: projHeadY, color: colors.accent, text: "MAJOR PROJECTS" });
+  addTextLines(commands, {
+    font: "F1",
+    size: 9.2,
+    x: rightX,
+    y: projHeadY - 16,
+    leading: 13.5,
+    color: colors.ink,
+    lines: resume.projects.map((p) => `• ${p}`),
+  });
+
+  // Footer rule and text
+  const footerY = 46;
+  strokeLine(commands, { x1: margin, y1: footerY + 14, x2: page.w - margin, y2: footerY + 14, color: colors.rule, width: 1 });
   addText(commands, {
-    font: "F2",
-    size: 10.6,
-    x: rightX,
-    y: colTop - 18,
-    color: colors.ink,
-    text: resume.experience.role,
-  });
-  addTextLines(commands, {
     font: "F1",
-    size: 10.2,
-    x: rightX,
-    y: colTop - 36,
-    leading: 14.2,
-    color: colors.ink,
-    lines: resume.experience.bullets.map((b) => `- ${b}`),
-  });
-
-  const servicesHeadY = colTop - 36 - resume.experience.bullets.length * 14.2 - 20;
-  addText(commands, { font: "F2", size: 11, x: rightX, y: servicesHeadY, color: colors.accent, text: "SERVICES" });
-  addTextLines(commands, {
-    font: "F1",
-    size: 10.2,
-    x: rightX,
-    y: servicesHeadY - 18,
-    leading: 14.2,
-    color: colors.ink,
-    lines: resume.services.map((s) => `- ${s}`),
-  });
-
-  // Extra sections to avoid empty space
-  const toolsHeadY = projectsHeadY - 18 - resume.projects.length * 14.2 - 24;
-  addText(commands, { font: "F2", size: 11, x: margin, y: toolsHeadY, color: colors.accent, text: "TOOLS & PRACTICES" });
-  addTextLines(commands, {
-    font: "F1",
-    size: 10.2,
+    size: 8.8,
     x: margin,
-    y: toolsHeadY - 18,
-    leading: 14.2,
-    color: colors.ink,
-    lines: resume.tools.map((s) => `- ${s}`),
+    y: footerY,
+    color: colors.muted,
+    text: "Abirullah • Software Engineer & CTO at Abler • https://abirullah.vercel.app/ • https://abler.dev/",
   });
-
-  const workflowHeadY = toolsHeadY - 18 - resume.tools.length * 14.2 - 24;
-  addText(commands, { font: "F2", size: 11, x: margin, y: workflowHeadY, color: colors.accent, text: "WORKFLOW" });
-  addTextLines(commands, {
-    font: "F1",
-    size: 10.2,
-    x: margin,
-    y: workflowHeadY - 18,
-    leading: 14.2,
-    color: colors.ink,
-    lines: resume.workflow.map((s) => `- ${s}`),
-  });
-
-  const highlightsHeadY = servicesHeadY - 18 - resume.services.length * 14.2 - 24;
-  addText(commands, { font: "F2", size: 11, x: rightX, y: highlightsHeadY, color: colors.accent, text: "HIGHLIGHTS" });
-  addTextLines(commands, {
-    font: "F1",
-    size: 10.2,
-    x: rightX,
-    y: highlightsHeadY - 18,
-    leading: 14.2,
-    color: colors.ink,
-    lines: resume.highlights.map((s) => `- ${s}`),
-  });
-
-  const contactHeadY = highlightsHeadY - 18 - resume.highlights.length * 14.2 - 24;
-  addText(commands, { font: "F2", size: 11, x: rightX, y: contactHeadY, color: colors.accent, text: "CONTACT" });
-  addTextLines(commands, {
-    font: "F1",
-    size: 10.2,
-    x: rightX,
-    y: contactHeadY - 18,
-    leading: 14.2,
-    color: colors.ink,
-    lines: [...resume.contact, `Portfolio: ${resume.portfolioUrl}`].map((s) => `- ${s}`),
-  });
-
-  // Footer
-  const footerY = 54;
-  strokeLine(commands, { x1: margin, y1: footerY + 18, x2: page.w - margin, y2: footerY + 18, color: colors.rule, width: 1 });
-  addText(commands, { font: "F1", size: 9.6, x: margin, y: footerY, color: colors.muted, text: resume.portfolioUrl });
 
   const contentStream = `${commands.join("\n")}\n`;
   const pdf = buildPdf({ contentStream });
 
-  fs.mkdirSync(path.dirname(OUT_PATH), { recursive: true });
-  fs.writeFileSync(OUT_PATH, pdf);
-
-  // eslint-disable-next-line no-console
-  console.log(`Wrote: ${OUT_PATH} (${pdf.length} bytes)`);
+  for (const outPath of OUT_PATHS) {
+    fs.mkdirSync(path.dirname(outPath), { recursive: true });
+    fs.writeFileSync(outPath, pdf);
+    // eslint-disable-next-line no-console
+    console.log(`Wrote: ${outPath} (${pdf.length} bytes)`);
+  }
 }
 
 main();

@@ -1,0 +1,129 @@
+.navbar {
+  width: 100%;
+  background: #ffffff;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.container {
+  max-width: 1140px;
+  margin: 0 auto;
+  padding: 16px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 19px;
+  font-weight: 800;
+  color: #000000;
+  text-decoration: none;
+  letter-spacing: -0.02em;
+}
+
+.logoIcon {
+  width: 22px;
+  height: 22px;
+  background: #000000;
+  border-radius: 4px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.navLinks {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
+.navLink {
+  font-size: 15px;
+  font-weight: 600;
+  color: #000000;
+  text-decoration: none;
+  transition: opacity 150ms ease;
+}
+
+.navLink:hover {
+  opacity: 0.65;
+}
+
+.resumeBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 18px;
+  background: #000000;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: all 160ms ease;
+  border: 1px solid #000000;
+}
+
+.resumeBtn:hover {
+  background: #262626;
+  transform: translateY(-1px);
+}
+
+.mobileToggle {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 20px;
+  color: #000000;
+  cursor: pointer;
+  padding: 4px;
+}
+
+.mobileMenu {
+  display: none;
+}
+
+@media (max-width: 820px) {
+  .navLinks,
+  .resumeBtn {
+    display: none;
+  }
+
+  .mobileToggle {
+    display: block;
+  }
+
+  .mobileMenu {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 20px 24px;
+    background: #ffffff;
+    border-top: 1px solid #f0f0f0;
+  }
+
+  .mobileResumeBtn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 10px;
+    background: #000000;
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 600;
+    border-radius: 6px;
+    text-decoration: none;
+    margin-top: 8px;
+  }
+}
+

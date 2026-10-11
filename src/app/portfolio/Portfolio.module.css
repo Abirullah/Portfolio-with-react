@@ -1,0 +1,8 @@
+.portfolioRoot {
+  width: 100%;
+  min-height: 100vh;
+  background: #ffffff;
+  color: #000000;
+  font-family: 'Sora', 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  overflow-x: hidden;
+}

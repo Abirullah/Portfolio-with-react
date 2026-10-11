@@ -1,7 +1,7 @@
-import SeaJourney from "./sea/SeaJourney";
+import Portfolio from "./portfolio/Portfolio";
 
 function App() {
-  return <SeaJourney />;
+  return <Portfolio />;
 }
 
 export default App;
