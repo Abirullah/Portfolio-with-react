@@ -1,62 +1,99 @@
 import { useForm, ValidationError } from "@formspree/react";
 import { FaGithub, FaLinkedinIn, FaWhatsapp, FaEnvelope } from "react-icons/fa";
+import useInView from "./useInView";
 import styles from "./Contact.module.css";
 
 export default function Contact() {
   const [state, handleSubmit] = useForm("xnjnznvd");
+  const [sectionRef, isInView] = useInView({ threshold: 0.15, once: true });
 
   return (
-    <section id="contact" className={styles.contactSection}>
+    <section id="contact" ref={sectionRef} className={styles.contactSection}>
       <div className={styles.container}>
         {/* Left Form Column */}
-        <div className={styles.formCol}>
+        <div
+          className={`${styles.formCol} ${
+            isInView ? styles.formColVisible : ""
+          }`}
+        >
           {state.succeeded ? (
             <div className={styles.successMsg}>
               Thank you! Your message has been sent successfully. I will get back to you soon.
             </div>
           ) : (
             <form onSubmit={handleSubmit} className={styles.form}>
-              <input
-                id="name"
-                type="text"
-                name="name"
-                required
-                placeholder="Your name"
-                className={styles.input}
-              />
-              <ValidationError prefix="Name" field="name" errors={state.errors} />
+              <div
+                className={`${styles.inputGroup} ${
+                  isInView ? styles.inputFadeUp : ""
+                }`}
+                style={{ animationDelay: "100ms" }}
+              >
+                <input
+                  id="name"
+                  type="text"
+                  name="name"
+                  required
+                  placeholder="Your name"
+                  className={styles.input}
+                />
+                <ValidationError prefix="Name" field="name" errors={state.errors} />
+              </div>
 
-              <input
-                id="email"
-                type="email"
-                name="email"
-                required
-                placeholder="Email"
-                className={styles.input}
-              />
-              <ValidationError prefix="Email" field="email" errors={state.errors} />
+              <div
+                className={`${styles.inputGroup} ${
+                  isInView ? styles.inputFadeUp : ""
+                }`}
+                style={{ animationDelay: "220ms" }}
+              >
+                <input
+                  id="email"
+                  type="email"
+                  name="email"
+                  required
+                  placeholder="Email"
+                  className={styles.input}
+                />
+                <ValidationError prefix="Email" field="email" errors={state.errors} />
+              </div>
 
-              <input
-                id="website"
-                type="text"
-                name="website"
-                placeholder="Your website (If exists)"
-                className={styles.input}
-              />
+              <div
+                className={`${styles.inputGroup} ${
+                  isInView ? styles.inputFadeUp : ""
+                }`}
+                style={{ animationDelay: "340ms" }}
+              >
+                <input
+                  id="website"
+                  type="text"
+                  name="website"
+                  placeholder="Your website (If exists)"
+                  className={styles.input}
+                />
+              </div>
 
-              <textarea
-                id="message"
-                name="message"
-                required
-                placeholder="How can I help?*"
-                className={styles.textarea}
-              />
-              <ValidationError prefix="Message" field="message" errors={state.errors} />
+              <div
+                className={`${styles.inputGroup} ${
+                  isInView ? styles.inputFadeUp : ""
+                }`}
+                style={{ animationDelay: "460ms" }}
+              >
+                <textarea
+                  id="message"
+                  name="message"
+                  required
+                  placeholder="How can I help?*"
+                  className={styles.textarea}
+                />
+                <ValidationError prefix="Message" field="message" errors={state.errors} />
+              </div>
 
               <button
                 type="submit"
                 disabled={state.submitting}
-                className={styles.submitBtn}
+                className={`${styles.submitBtn} ${
+                  isInView ? styles.inputFadeUp : ""
+                }`}
+                style={{ animationDelay: "580ms" }}
               >
                 {state.submitting ? "Sending..." : "Get In Touch"}
               </button>
@@ -64,7 +101,11 @@ export default function Contact() {
           )}
 
           {/* Social icons row under form */}
-          <div className={styles.socialRow}>
+          <div
+            className={`${styles.socialRow} ${
+              isInView ? styles.socialPopIn : ""
+            }`}
+          >
             <a
               href="https://github.com/Abirullah"
               target="_blank"
@@ -103,17 +144,35 @@ export default function Contact() {
         </div>
 
         {/* Right Info Column */}
-        <div className={styles.infoCol}>
+        <div
+          className={`${styles.infoCol} ${
+            isInView ? styles.infoColVisible : ""
+          }`}
+        >
           <h2 className={styles.headline}>
-            Let&apos;s <span className={styles.strokedText}>talk</span> for Something special
+            Let&apos;s{" "}
+            <span
+              className={`${styles.strokedText} ${
+                isInView ? styles.strokedPulse : ""
+              }`}
+            >
+              talk
+            </span>{" "}
+            for Something special
           </h2>
 
           <p className={styles.description}>
-            I seek to push the limits of creativity and engineering to create high-engaging, user-friendly, and memorable interactive experiences. Whether you have a project to build, need architectural consultation, or want to collaborate with Abler—feel free to reach out.
+            I seek to push the limits of creativity and engineering to create
+            high-engaging, user-friendly, and memorable interactive experiences.
+            Whether you have a project to build, need architectural consultation,
+            or want to collaborate with Abler—feel free to reach out.
           </p>
 
           <div className={styles.contactDirect}>
-            <a href="mailto:abirafridi87@gmail.com" className={styles.contactEmail}>
+            <a
+              href="mailto:abirafridi87@gmail.com"
+              className={styles.contactEmail}
+            >
               abirafridi87@gmail.com
             </a>
             <a
@@ -135,4 +194,3 @@ export default function Contact() {
 }
 
 export { Contact };
-

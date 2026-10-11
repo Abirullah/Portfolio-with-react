@@ -1,7 +1,8 @@
 .skillsSection {
   width: 100%;
   background: #ffffff;
-  padding: 60px 0 80px;
+  padding: 70px 0 90px;
+  overflow: hidden;
 }
 
 .container {
@@ -16,6 +17,14 @@
   font-weight: 500;
   color: #000000;
   margin: 0 0 48px;
+  opacity: 0;
+  transform: translateY(-20px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.titleVisible {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .title strong {
@@ -28,12 +37,14 @@
   gap: 20px;
   max-width: 980px;
   margin: 0 auto;
+  perspective: 1000px;
 }
 
+/* 3D Domino Card Flip Entrance */
 .skillCard {
   aspect-ratio: 1 / 1;
   border: 2px solid #000000;
-  border-radius: 10px;
+  border-radius: 12px;
   background: #ffffff;
   color: #000000;
   display: flex;
@@ -42,13 +53,39 @@
   justify-content: center;
   gap: 12px;
   padding: 16px;
-  transition: all 180ms ease;
   cursor: default;
+  opacity: 0;
+  transform: perspective(800px) rotateY(-80deg) rotateX(15deg) translateY(40px) scale(0.75);
+  transition: transform 220ms cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 220ms ease;
+  will-change: transform, opacity;
+}
+
+.cardVisible {
+  animation: dominoCardDeal 0.75s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+@keyframes dominoCardDeal {
+  0% {
+    opacity: 0;
+    transform: perspective(800px) rotateY(-80deg) rotateX(15deg) translateY(45px) scale(0.75);
+  }
+  65% {
+    opacity: 1;
+    transform: perspective(800px) rotateY(12deg) rotateX(-4deg) translateY(-8px) scale(1.04);
+  }
+  100% {
+    opacity: 1;
+    transform: perspective(800px) rotateY(0deg) rotateX(0deg) translateY(0px) scale(1);
+  }
 }
 
 .skillCard:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  transform: translateY(-8px) scale(1.06) rotate(1.2deg);
+  box-shadow: 6px 6px 0px #000000;
+}
+
+.skillCard:hover .icon {
+  transform: scale(1.15) rotate(6deg);
 }
 
 .invertedCard {
@@ -57,7 +94,7 @@
 }
 
 .invertedCard:hover {
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+  box-shadow: 6px 6px 0px rgba(0, 0, 0, 0.45);
 }
 
 .icon {
@@ -65,6 +102,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: transform 220ms ease;
 }
 
 .name {
@@ -89,4 +127,3 @@
     padding: 24px 16px;
   }
 }
-

@@ -1,12 +1,19 @@
+import useInView from "./useInView";
 import styles from "./About.module.css";
 
 export default function About() {
+  const [sectionRef, isInView] = useInView({ threshold: 0.2, once: true });
+
   return (
-    <section id="about" className={styles.aboutSection}>
+    <section id="about" ref={sectionRef} className={styles.aboutSection}>
       <div className={styles.container}>
-        {/* Left: Illustration in bordered box */}
+        {/* Left: Illustration in bordered box with stamp pop */}
         <div className={styles.imageCol}>
-          <div className={styles.imageBox}>
+          <div
+            className={`${styles.imageBox} ${
+              isInView ? styles.stampActive : ""
+            }`}
+          >
             <img
               src="/abirullah-about.jpg"
               alt="Abirullah - Software Engineer & CTO at Abler"
@@ -15,21 +22,44 @@ export default function About() {
           </div>
         </div>
 
-        {/* Right: Text story */}
+        {/* Right: Text story with gaussian blur-to-focus reveal */}
         <div className={styles.textCol}>
-          <h2 className={styles.title}>
+          <h2
+            className={`${styles.title} ${
+              isInView ? styles.textFocusActive : ""
+            }`}
+            style={{ animationDelay: "150ms" }}
+          >
             About <strong>Me</strong>
           </h2>
 
-          <p className={styles.paragraph}>
-            I&apos;m a passionate full-stack software engineer and technical leader specializing in modern web ecosystems (React, Node.js, Express, PostgreSQL, MongoDB, and modern full-stack architectures). I care deeply about clean code architecture, intuitive user interfaces, and writing reliable software that solves genuine problems.
+          <p
+            className={`${styles.paragraph} ${
+              isInView ? styles.textFocusActive : ""
+            }`}
+            style={{ animationDelay: "320ms" }}
+          >
+            I&apos;m a passionate full-stack software engineer and technical leader
+            specializing in modern web ecosystems (React, Node.js, Express,
+            PostgreSQL, MongoDB, and modern full-stack architectures). I care
+            deeply about clean code architecture, intuitive user interfaces, and
+            writing reliable software that solves genuine problems.
           </p>
 
-          <p className={styles.paragraph}>
-            My journey combines practical venture leadership with academic rigor. As Chief Technology Officer at Abler (abler.dev), a company founded by four brothers to turn ideas into software products, I direct technical choices and build client systems. Concurrently, as a Computer Science student at IMSciences in Peshawar, I continue to deepen my grounding in algorithms, database design, and low-level system design.
+          <p
+            className={`${styles.paragraph} ${
+              isInView ? styles.textFocusActive : ""
+            }`}
+            style={{ animationDelay: "520ms" }}
+          >
+            My journey combines practical venture leadership with academic
+            rigor. As Chief Technology Officer at Abler (abler.dev), a company
+            founded by four brothers to turn ideas into software products, I
+            direct technical choices and build client systems. Concurrently, as
+            a Computer Science student at IMSciences in Peshawar, I continue to
+            deepen my grounding in algorithms, database design, and low-level
+            system design.
           </p>
-
-
         </div>
       </div>
     </section>

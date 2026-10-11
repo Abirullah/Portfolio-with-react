@@ -1,3 +1,4 @@
+import useInView from "./useInView";
 import styles from "./Experience.module.css";
 
 const EXPERIENCES = [
@@ -21,30 +22,47 @@ const EXPERIENCES = [
     date: "Dec 2025 - May 2026",
     description:
       "Engineering responsive interfaces and optimizing backend API endpoints. Collaborating on team applications, state management, and full-stack feature delivery across modern web frameworks.",
-  }
+  },
 ];
 
 export default function Experience() {
+  const [sectionRef, isInView] = useInView({ threshold: 0.15, once: true });
+
   return (
-    <section className={styles.experienceSection}>
+    <section id="experience" ref={sectionRef} className={styles.experienceSection}>
       <div className={styles.container}>
-        <h2 className={styles.title}>
+        <h2 className={`${styles.title} ${isInView ? styles.titleVisible : ""}`}>
           My <strong>Experience</strong>
         </h2>
 
         <div className={styles.cardsList}>
-          {EXPERIENCES.map((exp, index) => (
-            <div key={index} className={styles.card}>
-              <div className={styles.cardHeader}>
-                <div className={styles.roleTitleWrapper}>
-                  <div className={styles.companyBadge}>{exp.badgeText}</div>
-                  <h3 className={styles.roleTitle}>{exp.role}</h3>
+          {EXPERIENCES.map((exp, index) => {
+            const isEven = index % 2 === 1;
+            return (
+              <div
+                key={index}
+                className={`${styles.card} ${
+                  isInView
+                    ? isEven
+                      ? styles.slideFromRight
+                      : styles.slideFromLeft
+                    : ""
+                }`}
+                style={{
+                  animationDelay: `${index * 160}ms`,
+                }}
+              >
+                <div className={styles.cardHeader}>
+                  <div className={styles.roleTitleWrapper}>
+                    <div className={styles.companyBadge}>{exp.badgeText}</div>
+                    <h3 className={styles.roleTitle}>{exp.role}</h3>
+                  </div>
+                  <span className={styles.dateRange}>{exp.date}</span>
                 </div>
-                <span className={styles.dateRange}>{exp.date}</span>
+                <p className={styles.description}>{exp.description}</p>
               </div>
-              <p className={styles.description}>{exp.description}</p>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </section>
@@ -52,4 +70,3 @@ export default function Experience() {
 }
 
 export { Experience };
-

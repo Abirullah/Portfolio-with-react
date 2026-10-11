@@ -1,0 +1,65 @@
+.sketchContainer {
+  position: relative;
+  width: 100%;
+  max-width: 460px;
+  aspect-ratio: 1 / 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: visible;
+  background: #ffffff;
+}
+
+.sketchCanvas {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+.finalImg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  z-index: 5;
+  animation: fadeIn 0.4s ease forwards;
+}
+
+.pencilHolder {
+  position: absolute;
+  z-index: 25;
+  pointer-events: none;
+  transform-origin: 0px 0px;
+  filter: drop-shadow(2px 6px 4px rgba(0, 0, 0, 0.25));
+  will-change: transform, left, top;
+}
+
+.pencilLifting {
+  opacity: 0;
+  transform: translate(-12px, -30px) rotate(-48deg) !important;
+  transition: transform 0.6s ease, opacity 0.6s ease;
+}
+
+.pencilSvg {
+  display: block;
+  transform: translate(0px, -11px);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0.85;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@media (max-width: 860px) {
+  .sketchContainer {
+    max-width: 320px;
+  }
+}

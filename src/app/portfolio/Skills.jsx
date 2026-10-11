@@ -12,6 +12,7 @@ import {
   SiExpress,
   SiTailwindcss,
 } from "react-icons/si";
+import useInView from "./useInView";
 import styles from "./Skills.module.css";
 
 const SKILLS = [
@@ -28,10 +29,12 @@ const SKILLS = [
 ];
 
 export default function Skills() {
+  const [sectionRef, isInView] = useInView({ threshold: 0.15, once: true });
+
   return (
-    <section id="skills" className={styles.skillsSection}>
+    <section id="skills" ref={sectionRef} className={styles.skillsSection}>
       <div className={styles.container}>
-        <h2 className={styles.title}>
+        <h2 className={`${styles.title} ${isInView ? styles.titleVisible : ""}`}>
           My <strong>Skills</strong>
         </h2>
 
@@ -41,7 +44,10 @@ export default function Skills() {
               key={index}
               className={`${styles.skillCard} ${
                 skill.inverted ? styles.invertedCard : ""
-              }`}
+              } ${isInView ? styles.cardVisible : ""}`}
+              style={{
+                animationDelay: `${index * 70}ms`,
+              }}
             >
               <div className={styles.icon}>{skill.icon}</div>
               <span className={styles.name}>{skill.name}</span>
@@ -54,4 +60,3 @@ export default function Skills() {
 }
 
 export { Skills };
-

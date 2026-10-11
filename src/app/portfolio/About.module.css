@@ -1,7 +1,8 @@
 .aboutSection {
   width: 100%;
   background: #ffffff;
-  padding: 80px 0;
+  padding: 85px 0;
+  overflow: hidden;
 }
 
 .container {
@@ -19,6 +20,7 @@
   justify-content: center;
 }
 
+/* Unique Stamp Pop Effect */
 .imageBox {
   width: 100%;
   max-width: 340px;
@@ -30,6 +32,37 @@
   display: flex;
   align-items: flex-end;
   justify-content: center;
+  opacity: 0;
+  transform: scale(0.65) rotate(-8deg);
+  transition: transform 240ms ease, box-shadow 240ms ease;
+  will-change: transform, opacity;
+}
+
+.stampActive {
+  animation: polaroidStampPop 0.85s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+@keyframes polaroidStampPop {
+  0% {
+    opacity: 0;
+    transform: scale(0.65) rotate(-8deg);
+    box-shadow: 0 0 0px rgba(0, 0, 0, 0);
+  }
+  70% {
+    opacity: 1;
+    transform: scale(1.05) rotate(2deg);
+    box-shadow: 12px 14px 0px rgba(0, 0, 0, 0.12);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+    box-shadow: 6px 6px 0px #000000;
+  }
+}
+
+.imageBox:hover {
+  transform: scale(1.03) rotate(-1.5deg);
+  box-shadow: 9px 9px 0px #000000;
 }
 
 .aboutImg {
@@ -50,6 +83,9 @@
   font-weight: 500;
   color: #000000;
   margin: 0;
+  opacity: 0;
+  filter: blur(8px);
+  transform: translateY(20px);
 }
 
 .title strong {
@@ -61,6 +97,27 @@
   line-height: 1.7;
   color: #555555;
   margin: 0;
+  opacity: 0;
+  filter: blur(8px);
+  transform: translateY(20px);
+}
+
+/* Gaussian Blur-to-Focus Reveal */
+.textFocusActive {
+  animation: blurToSharpFocus 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes blurToSharpFocus {
+  0% {
+    opacity: 0;
+    filter: blur(10px);
+    transform: translateY(24px);
+  }
+  100% {
+    opacity: 1;
+    filter: blur(0px);
+    transform: translateY(0px);
+  }
 }
 
 @media (max-width: 820px) {

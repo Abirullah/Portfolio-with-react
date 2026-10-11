@@ -3,6 +3,7 @@ import echoTuneImg from "../../assets/images/GlobalShare.png";
 import schoolErpImg from "../../assets/images/SchoolMgmt.svg";
 import scanCareImg from "../../assets/images/watherapp.jpeg";
 import { FaExternalLinkAlt } from "react-icons/fa";
+import useInView from "./useInView";
 import styles from "./Projects.module.css";
 
 const PROJECTS = [
@@ -40,77 +41,103 @@ const PROJECTS = [
   },
 ];
 
-export default function Projects() {
+function ProjectItem({ proj }) {
+  const [rowRef, isInView] = useInView({ threshold: 0.15, once: true });
+
   return (
-    <section id="projects" className={styles.projectsSection}>
+    <div
+      ref={rowRef}
+      className={`${styles.projectRow} ${
+        proj.reversed ? styles.reversedRow : ""
+      } ${isInView ? styles.rowVisible : ""}`}
+    >
+      {/* If reversed on desktop: details left, image right */}
+      {proj.reversed ? (
+        <>
+          <div
+            className={`${styles.detailsCol} ${
+              isInView ? styles.slideInLeft : ""
+            }`}
+          >
+            <span className={styles.projectNumber}>{proj.number}</span>
+            <h3 className={styles.projectTitle}>{proj.title}</h3>
+            <p className={styles.projectDesc}>{proj.desc}</p>
+            <a
+              href={proj.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.linkBtn}
+              aria-label={`Open ${proj.title}`}
+            >
+              <FaExternalLinkAlt />
+            </a>
+          </div>
+
+          <div
+            className={`${styles.imageCol} ${
+              isInView ? styles.curtainReveal : ""
+            }`}
+          >
+            <img
+              src={proj.image}
+              alt={proj.title}
+              className={styles.projectImg}
+              loading="lazy"
+            />
+          </div>
+        </>
+      ) : (
+        <>
+          <div
+            className={`${styles.imageCol} ${
+              isInView ? styles.curtainReveal : ""
+            }`}
+          >
+            <img
+              src={proj.image}
+              alt={proj.title}
+              className={styles.projectImg}
+              loading="lazy"
+            />
+          </div>
+
+          <div
+            className={`${styles.detailsCol} ${
+              isInView ? styles.slideInRight : ""
+            }`}
+          >
+            <span className={styles.projectNumber}>{proj.number}</span>
+            <h3 className={styles.projectTitle}>{proj.title}</h3>
+            <p className={styles.projectDesc}>{proj.desc}</p>
+            <a
+              href={proj.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.linkBtn}
+              aria-label={`Open ${proj.title}`}
+            >
+              <FaExternalLinkAlt />
+            </a>
+          </div>
+        </>
+      )}
+    </div>
+  );
+}
+
+export default function Projects() {
+  const [sectionRef, isInView] = useInView({ threshold: 0.1, once: true });
+
+  return (
+    <section id="projects" ref={sectionRef} className={styles.projectsSection}>
       <div className={styles.container}>
-        <h2 className={styles.title}>
+        <h2 className={`${styles.title} ${isInView ? styles.titleVisible : ""}`}>
           My <strong>Projects</strong>
         </h2>
 
         <div className={styles.projectsList}>
           {PROJECTS.map((proj, idx) => (
-            <div
-              key={idx}
-              className={`${styles.projectRow} ${
-                proj.reversed ? styles.reversedRow : ""
-              }`}
-            >
-              {/* If reversed on desktop: text is left, image is right */}
-              {proj.reversed ? (
-                <>
-                  <div className={styles.detailsCol}>
-                    <span className={styles.projectNumber}>{proj.number}</span>
-                    <h3 className={styles.projectTitle}>{proj.title}</h3>
-                    <p className={styles.projectDesc}>{proj.desc}</p>
-                    <a
-                      href={proj.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className={styles.linkBtn}
-                      aria-label={`Open ${proj.title}`}
-                    >
-                      <FaExternalLinkAlt />
-                    </a>
-                  </div>
-
-                  <div className={styles.imageCol}>
-                    <img
-                      src={proj.image}
-                      alt={proj.title}
-                      className={styles.projectImg}
-                      loading="lazy"
-                    />
-                  </div>
-                </>
-              ) : (
-                <>
-                  <div className={styles.imageCol}>
-                    <img
-                      src={proj.image}
-                      alt={proj.title}
-                      className={styles.projectImg}
-                      loading="lazy"
-                    />
-                  </div>
-
-                  <div className={styles.detailsCol}>
-                    <span className={styles.projectNumber}>{proj.number}</span>
-                    <h3 className={styles.projectTitle}>{proj.title}</h3>
-                    <p className={styles.projectDesc}>{proj.desc}</p>
-                    <a
-                      href={proj.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className={styles.linkBtn}
-                      aria-label={`Open ${proj.title}`}
-                    >
-                      <FaExternalLinkAlt />
-                    </a>
-                  </div>
-                </>
-              )}
-            </div>
+            <ProjectItem key={idx} proj={proj} />
           ))}
         </div>
       </div>
@@ -119,4 +146,3 @@ export default function Projects() {
 }
 
 export { Projects };
-

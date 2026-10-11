@@ -2,7 +2,8 @@
   width: 100%;
   background: #ffffff;
   color: #000000;
-  padding: 80px 0 100px;
+  padding: 85px 0 110px;
+  overflow: hidden;
 }
 
 .container {
@@ -22,25 +23,60 @@
   gap: 20px;
 }
 
+.formColVisible {
+  animation: formColFade 0.6s ease forwards;
+}
+
+@keyframes formColFade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
 .form {
   display: flex;
   flex-direction: column;
   gap: 16px;
 }
 
+.inputGroup {
+  width: 100%;
+  opacity: 0;
+  transform: translateY(24px);
+  will-change: transform, opacity;
+}
+
+.inputFadeUp {
+  animation: inputSlideUp 0.65s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes inputSlideUp {
+  0% {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .input,
 .textarea {
   width: 100%;
   padding: 14px 16px;
-  border: 1.8px solid #000000;
-  border-radius: 6px;
+  border: 2px solid #000000;
+  border-radius: 8px;
   font-family: inherit;
   font-size: 14px;
   color: #000000;
   background: #ffffff;
   outline: none;
   box-sizing: border-box;
-  transition: border-color 150ms ease;
+  transition: all 180ms ease;
 }
 
 .input::placeholder,
@@ -51,7 +87,8 @@
 .input:focus,
 .textarea:focus {
   border-color: #000000;
-  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
+  box-shadow: 4px 4px 0px #000000;
 }
 
 .textarea {
@@ -61,33 +98,55 @@
 
 .submitBtn {
   width: fit-content;
-  padding: 12px 28px;
+  padding: 14px 28px;
   background: #000000;
   color: #ffffff;
-  font-family: inherit;
-  font-size: 14px;
-  font-weight: 700;
   border: 2px solid #000000;
-  border-radius: 6px;
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 14.5px;
+  font-weight: 700;
   cursor: pointer;
-  transition: all 180ms ease;
+  transition: all 180ms cubic-bezier(0.34, 1.56, 0.64, 1);
+  opacity: 0;
+  transform: translateY(24px);
 }
 
-.submitBtn:hover:not(:disabled) {
-  background: #262626;
-  transform: translateY(-1px);
+.submitBtn:hover {
+  background: #ffffff;
+  color: #000000;
+  transform: translate(-3px, -3px);
+  box-shadow: 5px 5px 0px #000000;
 }
 
 .submitBtn:disabled {
   opacity: 0.6;
   cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
 }
 
+/* Social icons under form */
 .socialRow {
   display: flex;
   align-items: center;
   gap: 12px;
   margin-top: 12px;
+}
+
+.socialPopIn {
+  animation: socialRowStagger 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 0.6s forwards;
+}
+
+@keyframes socialRowStagger {
+  0% {
+    opacity: 0;
+    transform: translateY(16px) scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }
 
 .socialBtn {
@@ -116,6 +175,24 @@
   display: flex;
   flex-direction: column;
   gap: 20px;
+  opacity: 0;
+  transform: translateX(30px);
+  will-change: transform, opacity;
+}
+
+.infoColVisible {
+  animation: infoColSlide 0.75s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards;
+}
+
+@keyframes infoColSlide {
+  0% {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
 .headline {
@@ -133,6 +210,29 @@
   text-stroke: 1.5px #000000;
   font-weight: 800;
   margin: 0 6px;
+  display: inline-block;
+  transition: text-shadow 200ms ease;
+}
+
+/* Unique Electric Pulse on stroked 'talk' */
+.strokedPulse {
+  animation: electricStrokePulse 3s ease-in-out infinite alternate;
+}
+
+@keyframes electricStrokePulse {
+  0% {
+    -webkit-text-stroke: 1.5px #000000;
+    transform: scale(1);
+  }
+  50% {
+    -webkit-text-stroke: 2.2px #000000;
+    text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.15);
+    transform: scale(1.04);
+  }
+  100% {
+    -webkit-text-stroke: 1.5px #000000;
+    transform: scale(1);
+  }
 }
 
 .description {
@@ -154,11 +254,13 @@
   font-weight: 800;
   color: #000000;
   text-decoration: none;
-  transition: opacity 150ms ease;
+  transition: opacity 150ms ease, transform 150ms ease;
+  display: inline-block;
 }
 
 .contactEmail:hover {
   opacity: 0.7;
+  transform: translateX(3px);
 }
 
 .contactPhone {
@@ -166,13 +268,15 @@
   font-weight: 700;
   color: #000000;
   text-decoration: none;
-  transition: opacity 150ms ease;
+  transition: opacity 150ms ease, transform 150ms ease;
   font-family: "JetBrains Mono", monospace;
   letter-spacing: -0.01em;
+  display: inline-block;
 }
 
 .contactPhone:hover {
   opacity: 0.7;
+  transform: translateX(3px);
 }
 
 .contactLocation {
@@ -184,17 +288,17 @@
 .successMsg {
   padding: 16px;
   border: 2px solid #000000;
-  border-radius: 6px;
+  border-radius: 8px;
   background: #f4f4f5;
   color: #000000;
   font-size: 14px;
   font-weight: 600;
+  box-shadow: 4px 4px 0px #000000;
 }
 
 @media (max-width: 820px) {
   .container {
     grid-template-columns: 1fr;
-    gap: 48px;
+    gap: 40px;
   }
 }
-

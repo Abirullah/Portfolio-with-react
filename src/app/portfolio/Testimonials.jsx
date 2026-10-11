@@ -1,3 +1,4 @@
+import useInView from "./useInView";
 import styles from "./Testimonials.module.css";
 
 const TESTIMONIALS = [
@@ -28,10 +29,12 @@ const TESTIMONIALS = [
 ];
 
 export default function Testimonials() {
+  const [sectionRef, isInView] = useInView({ threshold: 0.15, once: true });
+
   return (
-    <section className={styles.testimonialsSection}>
+    <section id="testimonials" ref={sectionRef} className={styles.testimonialsSection}>
       <div className={styles.container}>
-        <h2 className={styles.title}>
+        <h2 className={`${styles.title} ${isInView ? styles.titleVisible : ""}`}>
           My <strong>Testimonial</strong>
         </h2>
 
@@ -41,7 +44,10 @@ export default function Testimonials() {
               key={idx}
               className={`${styles.card} ${
                 t.inverted ? styles.invertedCard : ""
-              }`}
+              } ${isInView ? styles.cardFloatActive : ""}`}
+              style={{
+                animationDelay: `${idx * 160}ms, ${idx * 900}ms`,
+              }}
             >
               <div className={styles.avatar}>{t.initial}</div>
               <p className={styles.quote}>&ldquo;{t.quote}&rdquo;</p>
@@ -58,4 +64,3 @@ export default function Testimonials() {
 }
 
 export { Testimonials };
-

@@ -2,7 +2,8 @@
   width: 100%;
   background: #000000;
   color: #ffffff;
-  padding: 80px 0 100px;
+  padding: 90px 0 110px;
+  overflow: hidden;
 }
 
 .container {
@@ -17,6 +18,14 @@
   font-weight: 500;
   color: #ffffff;
   margin: 0 0 64px;
+  opacity: 0;
+  transform: translateY(-20px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.titleVisible {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .title strong {
@@ -26,7 +35,7 @@
 .projectsList {
   display: flex;
   flex-direction: column;
-  gap: 60px;
+  gap: 70px;
 }
 
 .projectRow {
@@ -36,41 +45,107 @@
   align-items: center;
 }
 
+/* Unique Cinematic Curtain Reveal for Project Images */
 .imageCol {
   width: 100%;
-  border-radius: 12px;
+  border-radius: 14px;
   overflow: hidden;
   background: #18181b;
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+  border: 1.5px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.6);
   aspect-ratio: 16 / 10;
   display: flex;
   align-items: center;
   justify-content: center;
+  opacity: 0;
+  transform: scale(0.9) translateY(24px);
+  clip-path: polygon(0 0, 0 0, 0 100%, 0 100%);
+  transition: transform 320ms cubic-bezier(0.16, 1, 0.3, 1), box-shadow 320ms ease, border-color 320ms ease;
+  will-change: transform, opacity, clip-path;
+}
+
+.curtainReveal {
+  animation: curtainExpand 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes curtainExpand {
+  0% {
+    opacity: 0;
+    transform: scale(0.9) translateY(24px);
+    clip-path: polygon(0 0, 0 0, 0 100%, 0 100%);
+  }
+  40% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+  }
+}
+
+.imageCol:hover {
+  transform: translateY(-6px) scale(1.02);
+  border-color: rgba(255, 255, 255, 0.5);
+  box-shadow: 0 20px 45px rgba(255, 255, 255, 0.08);
 }
 
 .projectImg {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 300ms ease;
+  transition: transform 360ms ease;
 }
 
-.projectRow:hover .projectImg {
-  transform: scale(1.03);
+.imageCol:hover .projectImg {
+  transform: scale(1.04);
 }
 
 .detailsCol {
   display: flex;
   flex-direction: column;
   gap: 14px;
+  opacity: 0;
+  will-change: transform, opacity;
+}
+
+.slideInLeft {
+  animation: detailsFromLeft 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.15s forwards;
+}
+
+.slideInRight {
+  animation: detailsFromRight 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.15s forwards;
+}
+
+@keyframes detailsFromLeft {
+  0% {
+    opacity: 0;
+    transform: translateX(-40px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes detailsFromRight {
+  0% {
+    opacity: 0;
+    transform: translateX(40px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
 .projectNumber {
-  font-size: 36px;
+  font-size: 38px;
   font-weight: 800;
   color: #ffffff;
   line-height: 1;
+  font-family: "JetBrains Mono", monospace;
+  opacity: 0.9;
 }
 
 .projectTitle {
@@ -82,8 +157,8 @@
 }
 
 .projectDesc {
-  font-size: 14px;
-  line-height: 1.65;
+  font-size: 14.5px;
+  line-height: 1.68;
   color: #a1a1aa;
   margin: 0;
 }
@@ -96,23 +171,26 @@
   font-size: 18px;
   text-decoration: none;
   width: fit-content;
-  margin-top: 4px;
-  transition: transform 160ms ease, opacity 160ms ease;
+  margin-top: 6px;
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: all 180ms ease;
 }
 
 .linkBtn:hover {
+  background: #ffffff;
+  color: #000000;
   transform: translate(2px, -2px);
-  opacity: 0.8;
 }
 
 @media (max-width: 820px) {
   .projectRow {
     grid-template-columns: 1fr;
-    gap: 24px;
+    gap: 28px;
   }
 
   .reversedRow .imageCol {
     order: -1;
   }
 }
-
