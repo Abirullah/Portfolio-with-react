@@ -166,7 +166,7 @@ export default function Hero() {
         {/* Right image column: Pencil sketching Abirullah's illustration */}
         <div className={styles.imageContent}>
           <PencilSketch
-            imageSrc="/abirullah-hero.jpg"
+            imageSrc="/abirullah-hero.png"
             duration={10000} // exactly 10 seconds
           />
         </div>
